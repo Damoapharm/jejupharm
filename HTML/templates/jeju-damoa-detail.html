@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0" name="viewport">
+	<meta name="twitter:widgets:theme" content="light">
+	<meta property="og:title" content="다모아 약국" />
+	<meta property="og:type" content="website" />
+	<meta property="og:image" content="Your-Image-Url" />
+	<meta property="og:description" content="제주의 약국을 모두 모아" />
+	<title>{{Name}}</title>
+	<link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='images/jejuicon.png')}}">
+
+	<!-- Font -->
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700%7CMontserrat:400,700' rel='stylesheet' type='text/css'>
+	
+	<!-- Css -->
+	<link rel="stylesheet" href="{{url_for('static', filename='css/core.min.css')}}" />
+	<link rel="stylesheet" href="{{url_for('static', filename='css/skin.css')}}" />
+
+	<style>
+	ul {
+		list-style-type: none; margin: 0; padding: 0 40px;
+	}
+	li a {
+		display: block; text-align:center; padding:0 ; text-decoration: none;
+	}
+	.navl{
+		float:right;
+	}
+	</style>
+
+	<!--[if lt IE 9]>
+    	<script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+</head>
+<body class="shop single-product">
+	<div class="pt-0">
+		<ul style="height:80px; background-color:color-white">
+			<li class="navl background-color:color-white" style="padding:20px; float:left;">
+				<a href="/"><img src="{{ url_for('static', filename='images/jejulogo2.png')}}" alt="다모아 약국" width="100"/></a></li>
+			<li class="navl" text="color:rgba(140, 198, 63, 1);" style="padding:25px; float:right;"><a href="/JejuPharmacyTotal"><img src="{{ url_for('static', filename='images/jejulist2.png')}}" alt="약국 목록 보기" width="90"/></a></li>
+		</ul>
+	</div>
+	<div class="column width-12 pt-30" style="width:100%; height:100px; background-color: rgba(140, 198, 63, 1); text-align:center; vertical-align:middle;">
+		<h2 class="title-medium color-white" style="font-size:36px; text-shadow:1.5px 1.5px rgb(112, 112, 112);">{{Name}}</h2>
+	</div>
+	
+	<div class="wrapper reveal-side-navigation">
+		<div class="wrapper-inner">
+
+			<!-- Content -->
+			<div class="content clearfix">
+
+				<div class="section-block replicable-content pt-50">
+					
+					<!-- Product Details -->
+					<div class="row product">
+						<div class="column width-6">
+							<div class="product-images">
+								<div class="thumbnail product-thumbnail img-scale-in" data-hover-easing="easeInOut" data-hover-speed="700" data-hover-bkg-color="#000000" data-hover-bkg-opacity="0.1">
+										<tr>
+                                            <td>
+                                                <div id="map" style="width:600px;height:400px;"></div>
+                                                <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=b06b1af6505f4e6c1ae2343487f22152"></script>
+                                                <script>
+                                                var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                                                    mapOption = { 
+                                                        center: new kakao.maps.LatLng("{{LatitudeValue}}", "{{LongitudeValue}}"), // 지도의 중심좌표
+                                                        level: 1 // 지도의 확대 레벨
+                                                    };
+
+                                                var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+                                                // 마커가 표시될 위치입니다 
+                                                var markerPosition  = new kakao.maps.LatLng("{{LatitudeValue}}", "{{LongitudeValue}}"); 
+
+                                                // 마커를 생성합니다
+                                                var marker = new kakao.maps.Marker({
+                                                    position: markerPosition
+                                                });
+
+                                                // 마커가 지도 위에 표시되도록 설정합니다
+                                                marker.setMap(map);
+                                                </script>
+                                            </td>
+                                        </tr>
+								</div>
+							</div>
+						</div>
+						<div class="column width-5 offset-1">
+							<div class="product-summary">
+								<hr class="hide show-on-mobile">
+								<div class="product-description">
+									<h4 style="color: grey-bold;">Tel</h4><p style="color:black">{{Tel}}</p>
+									<h4 style="color: grey-bold;">도로명 주소</h4><p style="color:black">{{AddressDoro}}</p>
+									<h4 class="color: grey-bold;">지번 주소</h4><p style="color:black">{{AddressJibun}}</p>
+									<h4 style="color: grey-bold;">우편번호</h4><p style="color:black">{{PostcodeDoro}}</p>
+								</div>
+								<hr class="hide show-on-mobile">
+							</div>
+						</div>
+					</div>
+					<!-- Product Details End -->
+
+				</div>
+			</div>
+			<!-- Content End -->
+
+			<!-- Footer -->
+			<footer class="footer">
+				<div class="footer-top two-columns-on-tablet" style="background-color: rgba(140, 198, 63, 1);">
+					<div class="row flex">
+						<div class="column width-3">
+							<div class="widget">
+								<a><img src="{{ url_for('static', filename='images/jejufoot.png')}}" alt="다모아 약국" width="100px"/></a>
+								<p>&copy; 2022. JejuDamoaPharmacy. All Rights Reserved.</p>
+							</div>
+						</div>
+						<div class="column width-3">
+							<div class="social-list list-horizontal">
+								<h4 class="widget-title">About Us</h4>
+								<p>GitHub @yjungs2<br>GitHub @hwas2</p>
+							</div>
+						</div>
+						<div class="column width-3">
+							<div class="social-list list-horizontal">
+								<h4 class="widget-title">About 제주</h4>
+								<li><a href="https://www.youtube.com/channel/UCK2JegInDWoDtwEpjh4HzLg"><span class="icon-youtube-with-circle medium"></span></a></li>
+								<li><a href="https://www.facebook.com/happyjejudo"><span class="icon-facebook-with-circle medium"></span></a></li>
+								<li><a href="https://www.instagram.com/special_jejudo/"><span class="icon-instagram-with-circle medium"></span></a></li>
+							</div>
+						</div>
+						<div class="column width-3">
+							<div class="social-list list-horizontal">
+								<h4 class="widget-title">About 제주데이터허브</h4>
+								<li><a href="https://www.youtube.com/channel/UC_q-SIWN8fx7rr3yK8U_9rA"><span class="icon-youtube-with-circle medium"></span></a></li>
+							</div>
+						</div>
+					</div>
+				</div>
+			</footer>
+			<!-- Footer End -->
+			
+		</div>
+	</div>
+
+	<!-- Js -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="{{url_for('static', filename='js/timber.master.min.js')}}"></script>
+</body>
+</html>

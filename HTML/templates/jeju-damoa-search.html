@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0" name="viewport">
+	<meta name="twitter:widgets:theme" content="light">
+	<meta property="og:title" content="Your-Title-Here" />
+	<meta property="og:type" content="website" />
+	<meta property="og:image" content="Your-Image-Url" />
+	<meta property="og:description" content="Your-Page-Description" />
+	<title>다모아 약국</title>
+	<link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='images/jejuicon.png')}}">
+	<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+	
+	<!-- Font -->
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700%7CMontserrat:400,700' rel='stylesheet' type='text/css'>
+	
+	<!-- Css -->
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.css" type="text/css">
+	<link rel="stylesheet" href="{{url_for('static', filename='css/core.min.css')}}" />
+	<link rel="stylesheet" href="{{url_for('static', filename='css/skin.css')}}" />
+
+	<!--[if lt IE 9]>
+    	<script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body class="shop catalogue-products">
+
+	<div class="wrapper reveal-side-navigation">
+		<div class="wrapper-inner">
+
+			<!-- Header -->
+			<header class="header with-shadow header-absolute header-fixed-on" style="position:fixed;">
+				<div class="header-inner">
+					<div class="row nk-navbar">
+						<div class="column width-12 nav-bar-inner">
+							<div class="logo">
+								<div class="logo-inner">
+									<a href="/JejuPharmacyMoa"><img src="{{ url_for('static', filename='images/jejulogo2.png')}}" alt="다모아 약국" /></a>
+									<a href="/JejuPharmacyMoa"><img src="{{ url_for('static', filename='images/jejulogo2.png')}}" alt="다모아 약국" /></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</header>
+			<!-- Header End -->
+
+			<!-- Content -->
+			<div class="content clearfix">
+
+				<!-- Intro Title Section 1 -->
+				<div class="section-block pt-0" style="background-color: rgba(140, 198, 63, 1); padding-top:100px; height:150px;">
+					<div class="row">
+						<div class="column width-12 center">
+							<div class="title-container">
+								<div class="title-container-inner center">
+									<h2 class="color-white" style="font-size:30px"><br>제주의 약국을 모두 모아</h2>
+									<h4>내 주변 약국은?</h4>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Intro Title Section 1 End -->
+
+
+				<!-- Lightbox Images -->
+				<section class="section-block pt-0">
+					<div class="row">
+						<div class="column width-10 offset-1 center">
+							<h2 class="mb-50"><br>약국 목록 보기</h2>
+
+							<div class="container">
+								<div class="main-search-form">
+									<div class="form-row">
+										<div class="col-md-4 col-sm-4">
+											<div class="form-group">
+												<input name="What" type="text" class="form-control" id="what" placeholder="검색어를 입력하세요">
+											</div>
+										</div>
+										<!--end col-md-3-->
+										<div class="col-md-3 col-sm-3">
+											<button type="submit" class="btn btn-info width-100">Search</button>
+										</div>
+										<!--end col-md-3-->
+									</div>
+									<!--end form-row-->
+								</div>
+								<!--end main-search-form-->
+							</div>
+
+							
+
+						</div>
+					</div>
+				</section>
+			</div>
+			<!-- Content End -->
+
+			<script>
+				// 'request'라는 id를 가진 버튼 클릭 시 실행.
+				What1 = getParam('What')
+				FinalURL = 'http://127.0.0.1:5000/JejuPharmacySearch?What=' + What1
+				
+				$.ajax({
+					type : 'GET',
+					url : 'http://127.0.0.1:5000/JejuPharmacySearch?What=' + What1,
+					success : function(result){
+						var data = JSON.parse(result);
+						
+						AddressDoro = Object.values(data.AddressDoro)
+						Name = Object.values(data.Name)
+						for (var i=0; i<Data_Category.length; i++){
+							$("#itemList").append("\
+								<div class='grid-item product portrait grid-sizer'>\
+									<div class='thumbnail product-thumbnail img-scale-in' data-hover-easing='easeInOut' data-hover-speed='700' data-hover-bkg-color='#000000' data-hover-bkg-opacity='0.5'>\
+										<a class='overlay-link' href='#' form method='GET'>\
+											<img src='"+images/phbasic.png+"' alt=''>\
+											<span class='overlay-info'>\
+												<span>\
+													<span class='product-title'>"+AddressDoro[i]+"</span>\
+												</span>\
+											</span>\
+										</a>\
+									</div>\
+									<div class='product-details'>\
+										<h3 class='product-title'>\
+											<a href='#'><br>"+Name[i]+"</a>\
+										</h3>\
+										<span class='color-black'> <br> </span>\
+									</div>\
+								</div>");
+
+					}},
+					error: function(xhr, ajaxOptions, thrownError){
+					},
+				});
+			</script>
+
+			<div class="grid-container fade-in-progressively no-padding-top" data-layout-mode="masonry" data-grid-ratio="1" data-animate-resize data-animate-resize-duration="0" id=""itemList">
+			</div>
+
+
+			<!-- Footer -->
+			<footer class="footer">
+				<div class="footer-top two-columns-on-tablet" style="background-color: rgba(140, 198, 63, 1);">
+					<div class="row flex">
+						<div class="column width-3">
+							<div class="widget">
+								<h4 class="widget-title">About 다모아 약국</h4>
+								<p>GitHub @yjungs2<br>GitHub @hwas2</p>
+							</div>
+						</div>
+						<div class="column width-3">
+							<ul class="social-list list-horizontal">
+								<h4 class="widget-title">About 제주</h4>
+								<li><a href="https://www.facebook.com/happyjejudo"><span class="icon-facebook-with-circle medium"></span></a></li>
+								<li><a href="https://www.instagram.com/special_jejudo/"><span class="icon-instagram-with-circle medium"></span></a></li>
+								<li><a href="https://www.youtube.com/channel/UC_q-SIWN8fx7rr3yK8U_9rA"><span class="icon-youtube-with-circle medium"></span></a></li>
+							</ul>
+						</div>
+						<div class="column width-3">
+						</div>
+						<div class="column width-3">
+							<div class="footer-inner">
+								<p class="copyright pull-left clear-float-on-mobile">
+									&copy; ThemeMountain. All Rights Reserved.</a>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</footer>
+			<!-- Footer End -->
+
+		</div>
+	</div>
+
+	<!-- Js -->
+	<script src="assets/js/jquery-3.3.1.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="{{url_for('static', filename='js/timber.master.min.js')}}"></script>
+</body>
+</html>

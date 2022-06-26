@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0" name="viewport">
+	<meta name="twitter:widgets:theme" content="light">
+	<meta property="og:title" content="다모아 약국" />
+	<meta property="og:type" content="website" />
+	<meta property="og:image" content="{{ url_for('static', filename='images/linkimage.png')}}" />
+	<meta property="og:description" content="제주의 약국을 모두 모아" />
+	<title>다모아 약국</title>
+	<link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='images/jejuicon.png')}}">
+
+	<!-- Font -->
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700%7CMontserrat:400,700' rel='stylesheet' type='text/css'>
+	
+	<!-- Css -->
+	<link rel="stylesheet" href="{{url_for('static', filename='css/core.min.css')}}" />
+	<link rel="stylesheet" href="{{url_for('static', filename='css/skin.css')}}" />
+
+	<style>
+	ul {
+		list-style-type: none; margin: 0; padding: 0 40px;
+	}
+	li a {
+		display: block; text-align:center; padding:0 ; text-decoration: none;
+	}
+	.navl{
+		float:right;
+	}
+	</style>
+
+	<!--[if lt IE 9]>
+    	<script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+	
+</head>
+<body class="shop catalogue-products">
+	<div class="pt-0">
+		<ul style="height:80px; background-color:color-white">
+			<li class="navl background-color:color-white" style="padding:20px; float:left;">
+				<a href="/"><img src="{{ url_for('static', filename='images/jejulogo2.png')}}" alt="다모아 약국" width="100"/></a></li>
+			<li class="navl" text="color:rgba(140, 198, 63, 1);" style="padding:25px; float:right;"><a href="/JejuPharmacyTotal"><img src="{{ url_for('static', filename='images/jejulist2.png')}}" alt="약국 목록 보기" width="90"/></a></li>
+		</ul>
+	</div>
+	<div class="column width-12 pt-20" style="width:100%; height:100px; background-color: rgba(140, 198, 63, 1); text-align:center; vertical-align:middle;">
+		<h2 class="color-white" style="font-size:30px">제주의 약국을 모두 모아</h2>
+		<h4>내 주변 약국은?</h4>
+	</div>
+
+	<div class="wrapper reveal-side-navigation">
+		<div class="wrapper-inner">
+
+			<!-- Content -->
+			<div class="content clearfix">
+
+				<!-- Map Section -->
+				<section class="section-block pt-0">
+					<div class="section-block no-padding">
+						<div class="row collapse full-width">
+							<div id="map" style="width:100%;height:600px;"></div>
+							<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=b06b1af6505f4e6c1ae2343487f22152&libraries=clusterer"></script>
+							<script>
+								var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+									mapOption = {
+										center: new kakao.maps.LatLng(33.383758, 126.542786), // 지도의 중심좌표
+										level: 9, // 지도의 확대 레벨
+										mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
+									}; 
+
+								// 지도를 생성한다 
+								var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+								// removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+								var iwRemoveable = true;
+
+								// 마커 클러스터러를 생성합니다 
+								var clusterer = new kakao.maps.MarkerClusterer({
+									map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
+									averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
+									minLevel: 6 // 클러스터 할 최소 지도 레벨 
+								});
+
+								var data = [
+								[33.96373803,126.2969648,'<div style="color:black; padding:5px; width:200px">추자약국<br>제주시 추자면 추자로 20<br><a href="/PharmacyDetail?Name=추자약국" style="color:blue">상세보기</a></div>'],
+								[33.34985648,126.1828066,'<div style="color:black; padding:5px; width:200px">신창약국<br>제주시 한경면 두신로 75<br><a href="/PharmacyDetail?Name=신창약국" style="color:blue">상세보기</a></div>'],
+								[33.30165645,126.1798297,'<div style="color:black; padding:5px; width:200px">차귀도 약국<br>제주시 한경면 고산로 8<br><a href="/PharmacyDetail?Name=차귀도 약국" style="color:blue">상세보기</a></div>'],
+								[33.30240959,126.1797807,'<div style="color:black; padding:5px; width:200px">장수약국<br>제주시 한경면 고산로 16<br><a href="/PharmacyDetail?Name=장수약국" style="color:blue">상세보기</a></div>'],
+								[33.40867061,126.2643352,'<div style="color:black; padding:5px; width:200px">새별약국<br>제주시 한림읍 동명북1길 11, 1층 102호<br><a href="/PharmacyDetail?Name=새별약국" style="color:blue">상세보기</a></div>'],
+								[33.4099007,126.2653694,'<div style="color:black; padding:5px; width:200px">한그루약국<br>제주시 한림읍 한림상로 116, 103호<br><a href="/PharmacyDetail?Name=한그루약국" style="color:blue">상세보기</a></div>'],
+								[33.4087708,126.2666731,'<div style="color:black; padding:5px; width:200px">달래약국<br>제주시 한림읍 한림중앙로 71, 1층<br><a href="/PharmacyDetail?Name=달래약국" style="color:blue">상세보기</a></div>'],
+								[33.41059602,126.2651072,'<div style="color:black; padding:5px; width:200px">은솔약국<br>제주시 한림읍 한림중앙로 46<br><a href="/PharmacyDetail?Name=은솔약국" style="color:blue">상세보기</a></div>'],
+								[33.4145826,126.264869,'<div style="color:black; padding:5px; width:200px">세창약국<br>제주시 한림읍 한림중앙로 1<br><a href="/PharmacyDetail?Name=세창약국" style="color:blue">상세보기</a></div>'],
+								[33.41216825,126.265191,'<div style="color:black; padding:5px; width:200px">태안약국<br>제주시 한림읍 한림중앙로 29<br><a href="/PharmacyDetail?Name=태안약국" style="color:blue">상세보기</a></div>'],
+								[33.41553253,126.2653136,'<div style="color:black; padding:5px; width:200px">동서약국<br>제주시 한림읍 한림로 682<br><a href="/PharmacyDetail?Name=동서약국" style="color:blue">상세보기</a></div>'],
+								[33.41549227,126.2649251,'<div style="color:black; padding:5px; width:200px">한림약국<br>제주시 한림읍 한림로 679<br><a href="/PharmacyDetail?Name=한림약국" style="color:blue">상세보기</a></div>'],
+								[33.41368576,126.262828,'<div style="color:black; padding:5px; width:200px">현재약국<br>제주시 한림읍 한림로 650<br><a href="/PharmacyDetail?Name=현재약국" style="color:blue">상세보기</a></div>'],
+								[33.41446639,126.2645811,'<div style="color:black; padding:5px; width:200px">녹십자약국<br>제주시 한림읍 한림중앙로 4<br><a href="/PharmacyDetail?Name=녹십자약국" style="color:blue">상세보기</a></div>'],
+								[33.41436079,126.2640592,'<div style="color:black; padding:5px; width:200px">중앙약국<br>제주시 한림읍 한림로 664<br><a href="/PharmacyDetail?Name=중앙약국" style="color:blue">상세보기</a></div>'],
+								[33.45005238,126.3083998,'<div style="color:black; padding:5px; width:200px">대동약국<br>제주시 애월읍 곽지7길 1, 2층<br><a href="/PharmacyDetail?Name=대동약국" style="color:blue">상세보기</a></div>'],
+								[33.46437856,126.3199709,'<div style="color:black; padding:5px; width:200px">아라약국<br>제주시 애월읍 애월로 120<br><a href="/PharmacyDetail?Name=아라약국" style="color:blue">상세보기</a></div>'],
+								[33.48034674,126.4009847,'<div style="color:black; padding:5px; width:200px">하귀약국<br>제주시 애월읍 하귀로 35<br><a href="/PharmacyDetail?Name=하귀약국" style="color:blue">상세보기</a></div>'],
+								[33.48175613,126.4050129,'<div style="color:black; padding:5px; width:200px">송약국<br>제주시 애월읍 하귀로 77<br><a href="/PharmacyDetail?Name=송약국" style="color:blue">상세보기</a></div>'],
+								[33.48641829,126.4145655,'<div style="color:black; padding:5px; width:200px">곰온누리약국<br>제주시 애월읍 하귀9길 2, 1층 106호<br><a href="/PharmacyDetail?Name=곰온누리약국" style="color:blue">상세보기</a></div>'],
+								[33.48506119,126.4121592,'<div style="color:black; padding:5px; width:200px">하귀하나로약국<br>제주시 애월읍 일주서로 7136<br><a href="/PharmacyDetail?Name=하귀하나로약국" style="color:blue">상세보기</a></div>'],
+								[33.48673936,126.4149693,'<div style="color:black; padding:5px; width:200px">동백약국<br>제주시 애월읍 하귀9길 1, 1층 103호<br><a href="/PharmacyDetail?Name=동백약국" style="color:blue">상세보기</a></div>'],
+								[33.48419446,126.4305346,'<div style="color:black; padding:5px; width:200px">큰곰약국<br>제주시 우평로 338, 1층 (외도일동)<br><a href="/PharmacyDetail?Name=큰곰약국" style="color:blue">상세보기</a></div>'],
+								[33.48661694,126.430634,'<div style="color:black; padding:5px; width:200px">외도약국<br>제주시 우정로 70, 1층 (외도일동)<br><a href="/PharmacyDetail?Name=외도약국" style="color:blue">상세보기</a></div>'],
+								[33.48936393,126.4306794,'<div style="color:black; padding:5px; width:200px">부원약국<br>제주시 우정로8길 2, 1층 (외도일동)<br><a href="/PharmacyDetail?Name=부원약국" style="color:blue">상세보기</a></div>'],
+								[33.48797699,126.4307311,'<div style="color:black; padding:5px; width:200px">우리들약국<br>제주시 우정로 56 (외도일동)<br><a href="/PharmacyDetail?Name=우리들약국" style="color:blue">상세보기</a></div>'],
+								[33.48609336,126.4317271,'<div style="color:black; padding:5px; width:200px">착한약국<br>제주시 우정로15길 5, 1층 (외도일동)<br><a href="/PharmacyDetail?Name=착한약국" style="color:blue">상세보기</a></div>'],
+								[33.48713632,126.4311184,'<div style="color:black; padding:5px; width:200px">드림약국<br>제주시 우정로 63 (외도일동)<br><a href="/PharmacyDetail?Name=드림약국" style="color:blue">상세보기</a></div>'],
+								[33.48665569,126.4311189,'<div style="color:black; padding:5px; width:200px">밝은약국<br>제주시 우정로 69, 1층 (외도일동)<br><a href="/PharmacyDetail?Name=밝은약국" style="color:blue">상세보기</a></div>'],
+								[33.48938837,126.4317008,'<div style="color:black; padding:5px; width:200px">애월바다약국<br>제주시 절물1길 39, 1층 (외도일동)<br><a href="/PharmacyDetail?Name=애월바다약국" style="color:blue">상세보기</a></div>'],
+								[33.48613068,126.4312336,'<div style="color:black; padding:5px; width:200px">알로하약국<br>제주시 우정로15길 1, 1층 106호 (외도일동, 대원상록수11차아파트)<br><a href="/PharmacyDetail?Name=알로하약국" style="color:blue">상세보기</a></div>'],
+								[33.48625098,126.4832413,'<div style="color:black; padding:5px; width:200px">매일약국<br>제주시 노연로 29 (노형동)<br><a href="/PharmacyDetail?Name=매일약국" style="color:blue">상세보기</a></div>'],
+								[33.48400661,126.4807308,'<div style="color:black; padding:5px; width:200px">생생약국<br>제주시 원노형남1길 1 (노형동)<br><a href="/PharmacyDetail?Name=생생약국" style="color:blue">상세보기</a></div>'],
+								[33.48424751,126.4817419,'<div style="color:black; padding:5px; width:200px">가까운약국<br>제주시 원노형남1길 11, 1층 106호 (노형동)<br><a href="/PharmacyDetail?Name=가까운약국" style="color:blue">상세보기</a></div>'],
+								[33.48483722,126.4796056,'<div style="color:black; padding:5px; width:200px">천지약국<br>제주시 1100로 3347, 1층 (노형동)<br><a href="/PharmacyDetail?Name=천지약국" style="color:blue">상세보기</a></div>'],
+								[33.48341472,126.4761263,'<div style="color:black; padding:5px; width:200px">으뜸약국<br>제주시 노형로 376, 1층 (노형동)<br><a href="/PharmacyDetail?Name=으뜸약국" style="color:blue">상세보기</a></div>'],
+								[33.4823233,126.4805171,'<div style="color:black; padding:5px; width:200px">그린온누리약국<br>제주시 노형12길 27 (노형동)<br><a href="/PharmacyDetail?Name=그린온누리약국" style="color:blue">상세보기</a></div>'],
+								[33.48400117,126.477847,'<div style="color:black; padding:5px; width:200px">예은온누리약국<br>제주시 노형8길 8, 1층 (노형동)<br><a href="/PharmacyDetail?Name=예은온누리약국" style="color:blue">상세보기</a></div>'],
+								[33.48362197,126.4801443,'<div style="color:black; padding:5px; width:200px">새봄약국<br>제주시 1100로 3333, B호 (노형동)<br><a href="/PharmacyDetail?Name=새봄약국" style="color:blue">상세보기</a></div>'],
+								[33.48432624,126.4773462,'<div style="color:black; padding:5px; width:200px">신행복약국<br>제주시 노형8길 2 (노형동, 지하1층)<br><a href="/PharmacyDetail?Name=신행복약국" style="color:blue">상세보기</a></div>'],
+								[33.48444445,126.4777973,'<div style="color:black; padding:5px; width:200px">영제약국<br>제주시 노형8길 3, 1층 (노형동)<br><a href="/PharmacyDetail?Name=영제약국" style="color:blue">상세보기</a></div>'],
+								[33.4827941,126.4776266,'<div style="color:black; padding:5px; width:200px">예사랑약국<br>제주시 노형11길 25, 1층 (노형동)<br><a href="/PharmacyDetail?Name=예사랑약국" style="color:blue">상세보기</a></div>'],
+								[33.48244219,126.481834,'<div style="color:black; padding:5px; width:200px">스마트약국<br>제주시 연북로 1, 롯데마트 1층 (노형동)<br><a href="/PharmacyDetail?Name=스마트약국" style="color:blue">상세보기</a></div>'],
+								[33.48302,126.4812051,'<div style="color:black; padding:5px; width:200px">마트존약국<br>제주시 1100로 3324(노형동)<br><a href="/PharmacyDetail?Name=마트존약국" style="color:blue">상세보기</a></div>'],
+								[33.48164977,126.4854034,'<div style="color:black; padding:5px; width:200px">연동팜약국<br>제주시 연북로 38, 1층 (노형동)<br><a href="/PharmacyDetail?Name=연동팜약국" style="color:blue">상세보기</a></div>'],
+								[33.48163293,126.4856252,'<div style="color:black; padding:5px; width:200px">굿모닝약국<br>제주시 연북로 40 (노형동,1층)<br><a href="/PharmacyDetail?Name=굿모닝약국" style="color:blue">상세보기</a></div>'],
+								[33.48126223,126.4863716,'<div style="color:black; padding:5px; width:200px">대정약국<br>제주시 과원북4길 35 (노형동)<br><a href="/PharmacyDetail?Name=대정약국" style="color:blue">상세보기</a></div>'],
+								[33.48166837,126.484952,'<div style="color:black; padding:5px; width:200px">신진팜약국<br>제주시 연북로 34, 1층 (노형동)<br><a href="/PharmacyDetail?Name=신진팜약국" style="color:blue">상세보기</a></div>'],
+								[33.481678,126.4843641,'<div style="color:black; padding:5px; width:200px">진약국<br>제주시 연북로 28, 1층 (노형동)<br><a href="/PharmacyDetail?Name=진약국" style="color:blue">상세보기</a></div>'],
+								[33.47940439,126.4817979,'<div style="color:black; padding:5px; width:200px">은우약국<br>제주시 1100로 3283, 1층 (노형동, 영화빌딩)<br><a href="/PharmacyDetail?Name=은우약국" style="color:blue">상세보기</a></div>'],
+								[33.47651589,126.4786434,'<div style="color:black; padding:5px; width:200px">더건강한약국<br>제주시 한라대학로 77-1, 1층 (노형동)<br><a href="/PharmacyDetail?Name=더건강한약국" style="color:blue">상세보기</a></div>'],
+								[33.4760038,126.4815058,'<div style="color:black; padding:5px; width:200px">숲약국<br>제주시 1100로 3213-27, 지하2층 202호 (노형동, 천마에코피아2차)<br><a href="/PharmacyDetail?Name=숲약국" style="color:blue">상세보기</a></div>'],
+								[33.48029087,126.472234,'<div style="color:black; padding:5px; width:200px">정존약국<br>제주시 고사마루길 2, 1층 (노형동)<br><a href="/PharmacyDetail?Name=정존약국" style="color:blue">상세보기</a></div>'],
+								[33.49174153,126.4712597,'<div style="color:black; padding:5px; width:200px">지아약국<br>제주시 억삼길 35-57, 가동 1층 4호 (이호이동)<br><a href="/PharmacyDetail?Name=지아약국" style="color:blue">상세보기</a></div>'],
+								[33.49174153,126.4712597,'<div style="color:black; padding:5px; width:200px">제주예스약국<br>제주시 억삼길 35-57, 가동 1층 3호 (이호이동)<br><a href="/PharmacyDetail?Name=제주예스약국" style="color:blue">상세보기</a></div>'],
+								[33.4888313,126.4766797,'<div style="color:black; padding:5px; width:200px">미소약국<br>제주시 월랑로8길 1 (노형동,아란야플라자 1층 105호)<br><a href="/PharmacyDetail?Name=미소약국" style="color:blue">상세보기</a></div>'],
+								[33.49092825,126.4787614,'<div style="color:black; padding:5px; width:200px">열린약국<br>제주시 월랑로10길 34 (노형동)<br><a href="/PharmacyDetail?Name=열린약국" style="color:blue">상세보기</a></div>'],
+								[33.48681267,126.4793213,'<div style="color:black; padding:5px; width:200px">건강드림약국<br>제주시 도령로 1, 1층 (노형동)<br><a href="/PharmacyDetail?Name=건강드림약국" style="color:blue">상세보기</a></div>'],
+								[33.48666984,126.4801105,'<div style="color:black; padding:5px; width:200px">노형한마음약국<br>제주시 도령로 7, 1층 (노형동, 금성빌딩)<br><a href="/PharmacyDetail?Name=노형한마음약국" style="color:blue">상세보기</a></div>'],
+								[33.48678756,126.4799328,'<div style="color:black; padding:5px; width:200px">유성약국<br>제주시 도령로 5 (노형동,1층)<br><a href="/PharmacyDetail?Name=유성약국" style="color:blue">상세보기</a></div>'],
+								[33.48647066,126.4784751,'<div style="color:black; padding:5px; width:200px">노형온누리약국<br>제주시 월랑로 3 (노형동)<br><a href="/PharmacyDetail?Name=노형온누리약국" style="color:blue">상세보기</a></div>'],
+								[33.4858042,126.4784078,'<div style="color:black; padding:5px; width:200px">노형타워약국<br>제주시 노형로 지하 407, 102호 (노형동)<br><a href="/PharmacyDetail?Name=노형타워약국" style="color:blue">상세보기</a></div>'],
+								[33.48582141,126.478301,'<div style="color:black; padding:5px; width:200px">명인약국<br>제주시 노형로 407, 1층 106호 (노형동, 노형타워)<br><a href="/PharmacyDetail?Name=명인약국" style="color:blue">상세보기</a></div>'],
+								[33.48856091,126.4760826,'<div style="color:black; padding:5px; width:200px">한라약국<br>제주시 월랑로 33, 1층 (노형동, 한라빌딩)<br><a href="/PharmacyDetail?Name=한라약국" style="color:blue">상세보기</a></div>'],
+								[33.48669003,126.4782634,'<div style="color:black; padding:5px; width:200px">세원약국<br>제주시 월랑로 5, 1층 (노형동)<br><a href="/PharmacyDetail?Name=세원약국" style="color:blue">상세보기</a></div>'],
+								[33.4863845,126.4785677,'<div style="color:black; padding:5px; width:200px">삼성약국<br>제주시 월랑로 1 (노형동,1층)<br><a href="/PharmacyDetail?Name=삼성약국" style="color:blue">상세보기</a></div>'],
+								[33.49023224,126.4741995,'<div style="color:black; padding:5px; width:200px">행복나눔약국<br>제주시 월랑로 59 (노형동)<br><a href="/PharmacyDetail?Name=행복나눔약국" style="color:blue">상세보기</a></div>'],
+								[33.48866492,126.4753072,'<div style="color:black; padding:5px; width:200px">초록약국<br>제주시 수덕로 6, 1층 (노형동)<br><a href="/PharmacyDetail?Name=초록약국" style="color:blue">상세보기</a></div>'],
+								[33.48614833,126.4727846,'<div style="color:black; padding:5px; width:200px">밝은사랑약국<br>제주시 수덕로 41, 1층 (노형동)<br><a href="/PharmacyDetail?Name=밝은사랑약국" style="color:blue">상세보기</a></div>'],
+								[33.50401597,126.4660518,'<div style="color:black; padding:5px; width:200px">365약국<br>제주시 서해안로 161 (도두일동)<br><a href="/PharmacyDetail?Name=365약국" style="color:blue">상세보기</a></div>'],
+								[33.50593647,126.4959513,'<div style="color:black; padding:5px; width:200px">제주공항약국<br>제주시 공항로 2, 3층 (용담이동, 국제공항)<br><a href="/PharmacyDetail?Name=제주공항약국" style="color:blue">상세보기</a></div>'],
+								[33.4858518,126.4960596,'<div style="color:black; padding:5px; width:200px">새한온누리약국<br>제주시 신대로 128 (연동,신대로128)<br><a href="/PharmacyDetail?Name=새한온누리약국" style="color:blue">상세보기</a></div>'],
+								[33.48723026,126.4905281,'<div style="color:black; padding:5px; width:200px">태평양약국<br>제주시 연동7길 30, 1층 (연동)<br><a href="/PharmacyDetail?Name=태평양약국" style="color:blue">상세보기</a></div>'],
+								[33.48857117,126.4911132,'<div style="color:black; padding:5px; width:200px">백록담약국<br>제주시 신대로12길 51, 로얄쇼핑센타및오피스텔 지하1층 1,2호 (연동)<br><a href="/PharmacyDetail?Name=백록담약국" style="color:blue">상세보기</a></div>'],
+								[33.48964845,126.4915452,'<div style="color:black; padding:5px; width:200px">한라프라자약국<br>제주시 삼무로 46, 1층 (연동)<br><a href="/PharmacyDetail?Name=한라프라자약국" style="color:blue">상세보기</a></div>'],
+								[33.48799534,126.4904812,'<div style="color:black; padding:5px; width:200px">에이스팜플러스약국<br>제주시 신대로14길 56 (연동)<br><a href="/PharmacyDetail?Name=에이스팜플러스약국" style="color:blue">상세보기</a></div>'],
+								[33.49086883,126.4872755,'<div style="color:black; padding:5px; width:200px">낙산약국<br>제주시 도령로 87, 현대오피스텔 1층 106,107호 (연동)<br><a href="/PharmacyDetail?Name=낙산약국" style="color:blue">상세보기</a></div>'],
+								[33.49091474,126.4848442,'<div style="color:black; padding:5px; width:200px">제주약국<br>제주시 성신로 13-8 (연동,이화아파트상가 102호, 103호)<br><a href="/PharmacyDetail?Name=제주약국" style="color:blue">상세보기</a></div>'],
+								[33.49091474,126.4848442,'<div style="color:black; padding:5px; width:200px">신제주대웅약국<br>제주시 성신로 13-8 (연동)<br><a href="/PharmacyDetail?Name=신제주대웅약국" style="color:blue">상세보기</a></div>'],
+								[33.49098361,126.4852104,'<div style="color:black; padding:5px; width:200px">한라산약국<br>제주시 성신로 13-4 (연동)<br><a href="/PharmacyDetail?Name=한라산약국" style="color:blue">상세보기</a></div>'],
+								[33.49011618,126.4859483,'<div style="color:black; padding:5px; width:200px">제주토마토약국<br>제주시 도령로 73, 1층 101호 (연동, 연동 펠리체)<br><a href="/PharmacyDetail?Name=제주토마토약국" style="color:blue">상세보기</a></div>'],
+								[33.49011618,126.4859483,'<div style="color:black; padding:5px; width:200px">마음약국<br>제주시 도령로 73, 103호 (연동, 연동 펠리체)<br><a href="/PharmacyDetail?Name=마음약국" style="color:blue">상세보기</a></div>'],
+								[33.48974154,126.486333,'<div style="color:black; padding:5px; width:200px">신한온누리약국<br>제주시 도령로 74 (연동)<br><a href="/PharmacyDetail?Name=신한온누리약국" style="color:blue">상세보기</a></div>'],
+								[33.48604828,126.489456,'<div style="color:black; padding:5px; width:200px">홍익한약국<br>제주시 노연로 87, 102호 (연동, 연동ABC주상복합)<br><a href="/PharmacyDetail?Name=홍익한약국" style="color:blue">상세보기</a></div>'],
+								[33.48572622,126.4897158,'<div style="color:black; padding:5px; width:200px">자연약국<br>제주시 노연로 90, 1층 (연동)<br><a href="/PharmacyDetail?Name=자연약국" style="color:blue">상세보기</a></div>'],
+								[33.48514143,126.4908076,'<div style="color:black; padding:5px; width:200px">신세계약국<br>제주시 연동8길 7 (연동,1층)<br><a href="/PharmacyDetail?Name=신세계약국" style="color:blue">상세보기</a></div>'],
+								[33.48513373,126.4905142,'<div style="color:black; padding:5px; width:200px">New제주약국<br>제주시 연동8길 8 (연동)<br><a href="/PharmacyDetail?Name=New제주약국" style="color:blue">상세보기</a></div>'],
+								[33.48211393,126.4920059,'<div style="color:black; padding:5px; width:200px">하나약국<br>제주시 연북로 99, 1층 (연동, 365빌딩)<br><a href="/PharmacyDetail?Name=하나약국" style="color:blue">상세보기</a></div>'],
+								[33.48261311,126.4900672,'<div style="color:black; padding:5px; width:200px">동인한약국<br>제주시 신광로 105, 1층 (연동, 연동하늘그린)<br><a href="/PharmacyDetail?Name=동인한약국" style="color:blue">상세보기</a></div>'],
+								[33.48154873,126.4893992,'<div style="color:black; padding:5px; width:200px">희망약국<br>제주시 연북로 76, 한성빌딩 1층 (연동)<br><a href="/PharmacyDetail?Name=희망약국" style="color:blue">상세보기</a></div>'],
+								[33.48114413,126.4900418,'<div style="color:black; padding:5px; width:200px">광주약국<br>제주시 국기로 7 (연동)<br><a href="/PharmacyDetail?Name=광주약국" style="color:blue">상세보기</a></div>'],
+								[33.48793087,126.5020579,'<div style="color:black; padding:5px; width:200px">맘꽃약국<br>제주시 연오로 59, 이룸프라자 101호 (오라삼동)<br><a href="/PharmacyDetail?Name=맘꽃약국" style="color:blue">상세보기</a></div>'],
+								[33.51173972,126.5183857,'<div style="color:black; padding:5px; width:200px">영신온누리약국<br>제주시 서문로 68 (용담일동)<br><a href="/PharmacyDetail?Name=영신온누리약국" style="color:blue">상세보기</a></div>'],
+								[33.51191481,126.5123473,'<div style="color:black; padding:5px; width:200px">우주약국<br>제주시 용담로 92 (용담이동,1층)<br><a href="/PharmacyDetail?Name=우주약국" style="color:blue">상세보기</a></div>'],
+								[33.50969928,126.5110538,'<div style="color:black; padding:5px; width:200px">상아약국<br>제주시 흥운길 6 (용담이동)<br><a href="/PharmacyDetail?Name=상아약국" style="color:blue">상세보기</a></div>'],
+								[33.51276853,126.5076523,'<div style="color:black; padding:5px; width:200px">용담온누리약국<br>제주시 용담로 46 (용담이동)<br><a href="/PharmacyDetail?Name=용담온누리약국" style="color:blue">상세보기</a></div>'],
+								[33.50060795,126.5049567,'<div style="color:black; padding:5px; width:200px">예약국<br>제주시 서광로 83, 1층 (용담이동, 예나빌딩)<br><a href="/PharmacyDetail?Name=예약국" style="color:blue">상세보기</a></div>'],
+								[33.5175602,126.5224609,'<div style="color:black; padding:5px; width:200px">탑동보룡약국<br>제주시 탑동로 24 (삼도이동, 형화빌딩)<br><a href="/PharmacyDetail?Name=탑동보룡약국" style="color:blue">상세보기</a></div>'],
+								[33.51289497,126.5212796,'<div style="color:black; padding:5px; width:200px">관덕정약국<br>제주시 관덕로 18 (삼도이동)<br><a href="/PharmacyDetail?Name=관덕정약국" style="color:blue">상세보기</a></div>'],
+								[33.50924498,126.5196514,'<div style="color:black; padding:5px; width:200px">새우리약국<br>제주시 서사로 36 (삼도일동)<br><a href="/PharmacyDetail?Name=새우리약국" style="color:blue">상세보기</a></div>'],
+								[33.50014209,126.5200552,'<div style="color:black; padding:5px; width:200px">서사라튼튼약국<br>제주시 서사로 137 (삼도일동)<br><a href="/PharmacyDetail?Name=서사라튼튼약국" style="color:blue">상세보기</a></div>'],
+								[33.50022415,126.5245958,'<div style="color:black; padding:5px; width:200px">해약국<br>제주시 서광로 263 (삼도일동)<br><a href="/PharmacyDetail?Name=해약국" style="color:blue">상세보기</a></div>'],
+								[33.50023532,126.5249448,'<div style="color:black; padding:5px; width:200px">성종약국<br>제주시 서광로 267 (삼도일동)<br><a href="/PharmacyDetail?Name=성종약국" style="color:blue">상세보기</a></div>'],
+								[33.50019051,126.5174341,'<div style="color:black; padding:5px; width:200px">우리약국<br>제주시 서광로 195 (삼도일동)<br><a href="/PharmacyDetail?Name=우리약국" style="color:blue">상세보기</a></div>'],
+								[33.50012435,126.5195244,'<div style="color:black; padding:5px; width:200px">미래약국<br>제주시 서광로 215 (삼도일동)<br><a href="/PharmacyDetail?Name=미래약국" style="color:blue">상세보기</a></div>'],
+								[33.50059002,126.5171367,'<div style="color:black; padding:5px; width:200px">한일온누리약국<br>제주시 평전1길 20, 1층 (삼도일동)<br><a href="/PharmacyDetail?Name=한일온누리약국" style="color:blue">상세보기</a></div>'],
+								[33.50024961,126.514722,'<div style="color:black; padding:5px; width:200px">온누리대우약국<br>제주시 서광로 171 (용담일동)<br><a href="/PharmacyDetail?Name=온누리대우약국" style="color:blue">상세보기</a></div>'],
+								[33.50031803,126.515203,'<div style="color:black; padding:5px; width:200px">보은약국<br>제주시  서광로  175 (용담일동)<br><a href="/PharmacyDetail?Name=보은약국" style="color:blue">상세보기</a></div>'],
+								[33.50024437,126.5149478,'<div style="color:black; padding:5px; width:200px">수성약국<br>제주시 서광로 173 (용담일동)<br><a href="/PharmacyDetail?Name=수성약국" style="color:blue">상세보기</a></div>'],
+								[33.49970348,126.5178752,'<div style="color:black; padding:5px; width:200px">금호약국<br>제주시 서광로 202 (삼도일동)<br><a href="/PharmacyDetail?Name=금호약국" style="color:blue">상세보기</a></div>'],
+								[33.49956589,126.5200809,'<div style="color:black; padding:5px; width:200px">오즈약국<br>제주시 서광로 220 (삼도일동)<br><a href="/PharmacyDetail?Name=오즈약국" style="color:blue">상세보기</a></div>'],
+								[33.49846319,126.5200436,'<div style="color:black; padding:5px; width:200px">건강한약국<br>제주시 서사로 155 (삼도일동)<br><a href="/PharmacyDetail?Name=건강한약국" style="color:blue">상세보기</a></div>'],
+								[33.4997156,126.5244825,'<div style="color:black; padding:5px; width:200px">새힘약국<br>제주시 서광로 262, 1층 (삼도일동)<br><a href="/PharmacyDetail?Name=새힘약국" style="color:blue">상세보기</a></div>'],
+								[33.51294077,126.5257116,'<div style="color:black; padding:5px; width:200px">유진약국<br>제주시 관덕로 60 (일도일동)<br><a href="/PharmacyDetail?Name=유진약국" style="color:blue">상세보기</a></div>'],
+								[33.51173689,126.5255491,'<div style="color:black; padding:5px; width:200px">동보약국<br>제주시 오현길 78 (이도일동)<br><a href="/PharmacyDetail?Name=동보약국" style="color:blue">상세보기</a></div>'],
+								[33.51295386,126.5251743,'<div style="color:black; padding:5px; width:200px">인수당건재약국<br>제주시 관덕로 54-2 (이도일동)<br><a href="/PharmacyDetail?Name=인수당건재약국" style="color:blue">상세보기</a></div>'],
+								[33.5126643,126.5248054,'<div style="color:black; padding:5px; width:200px">광제약국<br>제주시 중앙로 61 (이도일동)<br><a href="/PharmacyDetail?Name=광제약국" style="color:blue">상세보기</a></div>'],
+								[33.51053003,126.5242815,'<div style="color:black; padding:5px; width:200px">동우약국<br>제주시 중앙로15길 2 (이도일동,1층)<br><a href="/PharmacyDetail?Name=동우약국" style="color:blue">상세보기</a></div>'],
+								[33.51286814,126.5262868,'<div style="color:black; padding:5px; width:200px">정성약국<br>제주시 관덕로 66 (일도일동)<br><a href="/PharmacyDetail?Name=정성약국" style="color:blue">상세보기</a></div>'],
+								[33.51124119,126.5245607,'<div style="color:black; padding:5px; width:200px">현대약국<br>제주시 중앙로 77 (이도일동)<br><a href="/PharmacyDetail?Name=현대약국" style="color:blue">상세보기</a></div>'],
+								[33.5126643,126.5248054,'<div style="color:black; padding:5px; width:200px">새중앙약국<br>제주시 중앙로 61, 1층 (이도일동)<br><a href="/PharmacyDetail?Name=새중앙약국" style="color:blue">상세보기</a></div>'],
+								[33.50731144,126.5248002,'<div style="color:black; padding:5px; width:200px">정민당약국<br>제주시 중앙로 127 (이도일동)<br><a href="/PharmacyDetail?Name=정민당약국" style="color:blue">상세보기</a></div>'],
+								[33.50356568,126.5273669,'<div style="color:black; padding:5px; width:200px">연세익약국<br>제주시 중앙로 175, 1층 (이도일동)<br><a href="/PharmacyDetail?Name=연세익약국" style="color:blue">상세보기</a></div>'],
+								[33.50073528,126.5282082,'<div style="color:black; padding:5px; width:200px">365건강온누리약국<br>제주시 서광로 297, 1층 (이도일동)<br><a href="/PharmacyDetail?Name=365건강온누리약국" style="color:blue">상세보기</a></div>'],
+								[33.49975337,126.5251914,'<div style="color:black; padding:5px; width:200px">만년약국<br>제주시  서광로  268 (도남동)<br><a href="/PharmacyDetail?Name=만년약국" style="color:blue">상세보기</a></div>'],
+								[33.49238537,126.5251671,'<div style="color:black; padding:5px; width:200px">해모로약국<br>제주시 연삼로 305, 101호 (도남동)<br><a href="/PharmacyDetail?Name=해모로약국" style="color:blue">상세보기</a></div>'],
+								[33.4954441,126.5278056,'<div style="color:black; padding:5px; width:200px">한결약국<br>제주시 신성로 78 (도남동)<br><a href="/PharmacyDetail?Name=한결약국" style="color:blue">상세보기</a></div>'],
+								[33.49506736,126.5330026,'<div style="color:black; padding:5px; width:200px">늘좋은약국<br>제주시 중앙로 284 (이도이동)<br><a href="/PharmacyDetail?Name=늘좋은약국" style="color:blue">상세보기</a></div>'],
+								[33.49613004,126.5317999,'<div style="color:black; padding:5px; width:200px">센타약국<br>제주시 중앙로 266, 1층 102호 (이도이동, 영도 갤럭시타운)<br><a href="/PharmacyDetail?Name=센타약국" style="color:blue">상세보기</a></div>'],
+								[33.49475733,126.5329613,'<div style="color:black; padding:5px; width:200px">사랑약국<br>제주시 중앙로 286 (이도이동)<br><a href="/PharmacyDetail?Name=사랑약국" style="color:blue">상세보기</a></div>'],
+								[33.49149016,126.537247,'<div style="color:black; padding:5px; width:200px">행복약국<br>제주시 중앙로 337, 104호 (이도이동, 다우빌딩)<br><a href="/PharmacyDetail?Name=행복약국" style="color:blue">상세보기</a></div>'],
+								[33.49884046,126.5301455,'<div style="color:black; padding:5px; width:200px">청사약국<br>제주시 중앙로 234, 1층 (이도이동)<br><a href="/PharmacyDetail?Name=청사약국" style="color:blue">상세보기</a></div>'],
+								[33.50039159,126.5286339,'<div style="color:black; padding:5px; width:200px">100세약국<br>제주시 서광로 300-1 (이도이동)<br><a href="/PharmacyDetail?Name=100세약국" style="color:blue">상세보기</a></div>'],
+								[33.50033249,126.5288597,'<div style="color:black; padding:5px; width:200px">정다운약국<br>제주시 서광로 302 (이도이동)<br><a href="/PharmacyDetail?Name=정다운약국" style="color:blue">상세보기</a></div>'],
+								[33.49998168,126.526212,'<div style="color:black; padding:5px; width:200px">힐링약국<br>제주시 서광로 278, 1층 101호 (이도이동, 줌타워)<br><a href="/PharmacyDetail?Name=힐링약국" style="color:blue">상세보기</a></div>'],
+								[33.50020427,126.5278843,'<div style="color:black; padding:5px; width:200px">참약국<br>제주시 서광로 294, 1층 (이도이동)<br><a href="/PharmacyDetail?Name=참약국" style="color:blue">상세보기</a></div>'],
+								[33.49517182,126.5337576,'<div style="color:black; padding:5px; width:200px">둘셋약국<br>제주시 연삼로 395, 1층 (이도이동)<br><a href="/PharmacyDetail?Name=둘셋약국" style="color:blue">상세보기</a></div>'],
+								[33.50481566,126.5377394,'<div style="color:black; padding:5px; width:200px">세브란스약국<br>제주시 동광로 90 (이도이동)<br><a href="/PharmacyDetail?Name=세브란스약국" style="color:blue">상세보기</a></div>'],
+								[33.49264917,126.5352724,'<div style="color:black; padding:5px; width:200px">주원약국<br>제주시 중앙로 318 (이도이동)<br><a href="/PharmacyDetail?Name=주원약국" style="color:blue">상세보기</a></div>'],
+								[33.49270785,126.5359904,'<div style="color:black; padding:5px; width:200px">시온온누리약국<br>제주시 중앙로 319-1, 1층 (이도이동)<br><a href="/PharmacyDetail?Name=시온온누리약국" style="color:blue">상세보기</a></div>'],
+								[33.49699936,126.5462706,'<div style="color:black; padding:5px; width:200px">영주약국<br>제주시  연신로  46 (이도이동)<br><a href="/PharmacyDetail?Name=영주약국" style="color:blue">상세보기</a></div>'],
+								[33.4956113,126.5472665,'<div style="color:black; padding:5px; width:200px">봄여울약국<br>제주시 신설로7길 57, 제이힐링센터 (이도이동)<br><a href="/PharmacyDetail?Name=봄여울약국" style="color:blue">상세보기</a></div>'],
+								[33.4922384,126.5431769,'<div style="color:black; padding:5px; width:200px">더나은약국<br>제주시 승천로 75, 1층 (아라이동)<br><a href="/PharmacyDetail?Name=더나은약국" style="color:blue">상세보기</a></div>'],
+								[33.48925894,126.5400419,'<div style="color:black; padding:5px; width:200px">남광약국<br>제주시 남광로2길 43 (이도이동)<br><a href="/PharmacyDetail?Name=남광약국" style="color:blue">상세보기</a></div>'],
+								[33.48917435,126.5394318,'<div style="color:black; padding:5px; width:200px">제주튼튼한약국<br>제주시 중앙로 371, 1층 (이도이동)<br><a href="/PharmacyDetail?Name=제주튼튼한약국" style="color:blue">상세보기</a></div>'],
+								[33.49017231,126.5385292,'<div style="color:black; padding:5px; width:200px">우리동네약국<br>제주시 중앙로 355 (이도이동)<br><a href="/PharmacyDetail?Name=우리동네약국" style="color:blue">상세보기</a></div>'],
+								[33.49219265,126.5425795,'<div style="color:black; padding:5px; width:200px">오케이약국<br>제주시 승천로 74, 1층 (아라이동)<br><a href="/PharmacyDetail?Name=오케이약국" style="color:blue">상세보기</a></div>'],
+								[33.48825339,126.5393861,'<div style="color:black; padding:5px; width:200px">더한빛약국<br>제주시 중앙로 380, 1층 (이도이동)<br><a href="/PharmacyDetail?Name=더한빛약국" style="color:blue">상세보기</a></div>'],
+								[33.49008534,126.5377157,'<div style="color:black; padding:5px; width:200px">베스트약국<br>제주시 중앙로 354 (이도이동)<br><a href="/PharmacyDetail?Name=베스트약국" style="color:blue">상세보기</a></div>'],
+								[33.48921794,126.5384734,'<div style="color:black; padding:5px; width:200px">더블유스토어 이도약국<br>제주시 중앙로 366 (이도이동)<br><a href="/PharmacyDetail?Name=더블유스토어 이도약국" style="color:blue">상세보기</a></div>'],
+								[33.47423478,126.5453537,'<div style="color:black; padding:5px; width:200px">킴스약국<br>제주시 중앙로 552, 1층 (아라일동)<br><a href="/PharmacyDetail?Name=킴스약국" style="color:blue">상세보기</a></div>'],
+								[33.47458162,126.5435122,'<div style="color:black; padding:5px; width:200px">다정약국<br>제주시 아란7길 18, 1층 101호 (아라일동)<br><a href="/PharmacyDetail?Name=다정약국" style="color:blue">상세보기</a></div>'],
+								[33.47260163,126.5450358,'<div style="color:black; padding:5px; width:200px">도담약국<br>제주시 아란9길 6, 1층 (아라일동)<br><a href="/PharmacyDetail?Name=도담약국" style="color:blue">상세보기</a></div>'],
+								[33.4736954,126.5453701,'<div style="color:black; padding:5px; width:200px">햇님온누리약국<br>제주시 중앙로 560, 1층 (아라일동)<br><a href="/PharmacyDetail?Name=햇님온누리약국" style="color:blue">상세보기</a></div>'],
+								[33.46911727,126.5464263,'<div style="color:black; padding:5px; width:200px">아라동대한약국<br>제주시 아란13길 10 (아라일동)<br><a href="/PharmacyDetail?Name=아라동대한약국" style="color:blue">상세보기</a></div>'],
+								[33.46907194,126.5455437,'<div style="color:black; padding:5px; width:200px">아라종합약국<br>제주시 아란13길 20, 101호 (아라일동)<br><a href="/PharmacyDetail?Name=아라종합약국" style="color:blue">상세보기</a></div>'],
+								[33.46877134,126.5470212,'<div style="color:black; padding:5px; width:200px">제주누리약국<br>제주시 중앙로 616 (아라일동)<br><a href="/PharmacyDetail?Name=제주누리약국" style="color:blue">상세보기</a></div>'],
+								[33.46877134,126.5470212,'<div style="color:black; padding:5px; width:200px">건강일등약국<br>제주시 중앙로 616, 1층 (아라일동)<br><a href="/PharmacyDetail?Name=건강일등약국" style="color:blue">상세보기</a></div>'],
+								[33.47501466,126.5457464,'<div style="color:black; padding:5px; width:200px">민성약국<br>제주시 중앙로 543, 1층 (아라일동)<br><a href="/PharmacyDetail?Name=민성약국" style="color:blue">상세보기</a></div>'],
+								[33.4746302,126.5493983,'<div style="color:black; padding:5px; width:200px">힘찬약국<br>제주시 인다10길 35, 1층 (아라일동)<br><a href="/PharmacyDetail?Name=힘찬약국" style="color:blue">상세보기</a></div>'],
+								[33.46967202,126.5473621,'<div style="color:black; padding:5px; width:200px">대학약국<br>제주시  중앙로  611 (아라일동)<br><a href="/PharmacyDetail?Name=대학약국" style="color:blue">상세보기</a></div>'],
+								[33.50794136,126.5404718,'<div style="color:black; padding:5px; width:200px">고승아약국<br>제주시 동광로 131 (일도이동)<br><a href="/PharmacyDetail?Name=고승아약국" style="color:blue">상세보기</a></div>'],
+								[33.50950025,126.539704,'<div style="color:black; padding:5px; width:200px">보람약국<br>제주시 고마로 53 (일도이동)<br><a href="/PharmacyDetail?Name=보람약국" style="color:blue">상세보기</a></div>'],
+								[33.50787104,126.5403761,'<div style="color:black; padding:5px; width:200px">화신온누리약국<br>제주시 동광로 129 (일도이동)<br><a href="/PharmacyDetail?Name=화신온누리약국" style="color:blue">상세보기</a></div>'],
+								[33.50807721,126.5407817,'<div style="color:black; padding:5px; width:200px">올리브약국<br>제주시 동광로 133 (일도이동)<br><a href="/PharmacyDetail?Name=올리브약국" style="color:blue">상세보기</a></div>'],
+								[33.50414234,126.5422292,'<div style="color:black; padding:5px; width:200px">우성약국<br>제주시 천수로 53 수은빌딩 1층<br><a href="/PharmacyDetail?Name=우성약국" style="color:blue">상세보기</a></div>'],
+								[33.50150463,126.5435703,'<div style="color:black; padding:5px; width:200px">메디칼약국<br>제주시 고마로 149 (일도이동, 회광빌딩)<br><a href="/PharmacyDetail?Name=메디칼약국" style="color:blue">상세보기</a></div>'],
+								[33.50166411,126.5434691,'<div style="color:black; padding:5px; width:200px">강약국<br>제주시 고마로 147 (일도이동)<br><a href="/PharmacyDetail?Name=강약국" style="color:blue">상세보기</a></div>'],
+								[33.50239738,126.5474536,'<div style="color:black; padding:5px; width:200px">최약국<br>제주시 연삼로 548, 1층 (일도이동)<br><a href="/PharmacyDetail?Name=최약국" style="color:blue">상세보기</a></div>'],
+								[33.51350126,126.5348097,'<div style="color:black; padding:5px; width:200px">소망약국<br>제주시 동문로 76, 1층 (일도이동)<br><a href="/PharmacyDetail?Name=소망약국" style="color:blue">상세보기</a></div>'],
+								[33.51325906,126.5340328,'<div style="color:black; padding:5px; width:200px">참사랑약국<br>제주시 동문로 70 (일도이동, 화인퍼스트빌 9차)<br><a href="/PharmacyDetail?Name=참사랑약국" style="color:blue">상세보기</a></div>'],
+								[33.51363089,126.5366322,'<div style="color:black; padding:5px; width:200px">조은약국<br>제주시 동문로20길 1 (일도이동)<br><a href="/PharmacyDetail?Name=조은약국" style="color:blue">상세보기</a></div>'],
+								[33.51152505,126.5313623,'<div style="color:black; padding:5px; width:200px">신산약국<br>제주시 성지로 76-1 (일도이동,1층)<br><a href="/PharmacyDetail?Name=신산약국" style="color:blue">상세보기</a></div>'],
+								[33.50639227,126.538756,'<div style="color:black; padding:5px; width:200px">해오름약국<br>제주시 동광로 107 (일도이동)<br><a href="/PharmacyDetail?Name=해오름약국" style="color:blue">상세보기</a></div>'],
+								[33.50698673,126.5402939,'<div style="color:black; padding:5px; width:200px">수약국<br>제주시 동광로 124, 1층 (일도이동)<br><a href="/PharmacyDetail?Name=수약국" style="color:blue">상세보기</a></div>'],
+								[33.50550196,126.5384436,'<div style="color:black; padding:5px; width:200px">명원약국<br>제주시 동광로 100 (일도이동,1층)<br><a href="/PharmacyDetail?Name=명원약국" style="color:blue">상세보기</a></div>'],
+								[33.50604608,126.5391486,'<div style="color:black; padding:5px; width:200px">인제약국<br>제주시 동광로 108-1 (일도이동)<br><a href="/PharmacyDetail?Name=인제약국" style="color:blue">상세보기</a></div>'],
+								[33.50612984,126.5392465,'<div style="color:black; padding:5px; width:200px">인화온누리약국<br>제주시 동광로 110 (일도이동)<br><a href="/PharmacyDetail?Name=인화온누리약국" style="color:blue">상세보기</a></div>'],
+								[33.51327983,126.5260815,'<div style="color:black; padding:5px; width:200px">조일약국<br>제주시 관덕로 63 (일도일동)<br><a href="/PharmacyDetail?Name=조일약국" style="color:blue">상세보기</a></div>'],
+								[33.51310365,126.5304099,'<div style="color:black; padding:5px; width:200px">보림약국<br>제주시 동문로 35 (일도일동)<br><a href="/PharmacyDetail?Name=보림약국" style="color:blue">상세보기</a></div>'],
+								[33.51472317,126.532172,'<div style="color:black; padding:5px; width:200px">동의당온누리약국<br>제주시 만덕로 21 (건입동)<br><a href="/PharmacyDetail?Name=동의당온누리약국" style="color:blue">상세보기</a></div>'],
+								[33.5219764,126.5434403,'<div style="color:black; padding:5px; width:200px">이화약국<br>제주시 임항로 191, 1층 (건입동, 제주항국제여객터미널)<br><a href="/PharmacyDetail?Name=이화약국" style="color:blue">상세보기</a></div>'],
+								[33.52004074,126.5342262,'<div style="color:black; padding:5px; width:200px">터미널약국<br>제주시 임항로 111 (건입동)<br><a href="/PharmacyDetail?Name=터미널약국" style="color:blue">상세보기</a></div>'],
+								[33.5198328,126.5709609,'<div style="color:black; padding:5px; width:200px">동화약국<br>제주시 일주동로 241 (화북일동)<br><a href="/PharmacyDetail?Name=동화약국" style="color:blue">상세보기</a></div>'],
+								[33.51941978,126.5697665,'<div style="color:black; padding:5px; width:200px">365매일약국<br>제주시 일주동로 227 (화북일동)<br><a href="/PharmacyDetail?Name=365매일약국" style="color:blue">상세보기</a></div>'],
+								[33.51944259,126.5699478,'<div style="color:black; padding:5px; width:200px">월마트약국<br>제주시 일주동로 229, 1층 B호 (화북일동, 동인빌딩)<br><a href="/PharmacyDetail?Name=월마트약국" style="color:blue">상세보기</a></div>'],
+								[33.52063422,126.5722108,'<div style="color:black; padding:5px; width:200px">우리아빠약국<br>제주시 일주동로 255, 1층 (화북일동)<br><a href="/PharmacyDetail?Name=우리아빠약국" style="color:blue">상세보기</a></div>'],
+								[33.51902292,126.5668466,'<div style="color:black; padding:5px; width:200px">화북약국<br>제주시 일주동로 199 (화북일동,2층)<br><a href="/PharmacyDetail?Name=화북약국" style="color:blue">상세보기</a></div>'],
+								[33.51898015,126.5665798,'<div style="color:black; padding:5px; width:200px">바로약국<br>제주시 일주동로 197, 1층 (화북일동)<br><a href="/PharmacyDetail?Name=바로약국" style="color:blue">상세보기</a></div>'],
+								[33.51902708,126.5648186,'<div style="color:black; padding:5px; width:200px">온누리한솔약국<br>제주시 일주동로 181 (화북일동)<br><a href="/PharmacyDetail?Name=온누리한솔약국" style="color:blue">상세보기</a></div>'],
+								[33.5191288,126.5652368,'<div style="color:black; padding:5px; width:200px">화북남문약국<br>제주시 일주동로 185 (화북일동)<br><a href="/PharmacyDetail?Name=화북남문약국" style="color:blue">상세보기</a></div>'],
+								[33.51784274,126.5727941,'<div style="color:black; padding:5px; width:200px">옵티마힐링약국<br>제주시 동화로 28, 1층 (화북일동)<br><a href="/PharmacyDetail?Name=옵티마힐링약국" style="color:blue">상세보기</a></div>'],
+								[33.51760525,126.5727901,'<div style="color:black; padding:5px; width:200px">그린약국<br>제주시 동화로 30, 1층 (화북일동)<br><a href="/PharmacyDetail?Name=그린약국" style="color:blue">상세보기</a></div>'],
+								[33.51972318,126.5719812,'<div style="color:black; padding:5px; width:200px">비타민약국<br>제주시 일주동로 250, 1층 (화북일동)<br><a href="/PharmacyDetail?Name=비타민약국" style="color:blue">상세보기</a></div>'],
+								[33.51474298,126.5752607,'<div style="color:black; padding:5px; width:200px">무지개약국<br>제주시 화삼로1길 14, 1층 (화북일동)<br><a href="/PharmacyDetail?Name=무지개약국" style="color:blue">상세보기</a></div>'],
+								[33.52153791,126.586961,'<div style="color:black; padding:5px; width:200px">삼양온누리약국<br>제주시 일주동로 393, 1층 (삼양이동)<br><a href="/PharmacyDetail?Name=삼양온누리약국" style="color:blue">상세보기</a></div>'],
+								[33.52088417,126.5840802,'<div style="color:black; padding:5px; width:200px">삼양약국<br>제주시 일주동로 366, 1층 (삼양이동)<br><a href="/PharmacyDetail?Name=삼양약국" style="color:blue">상세보기</a></div>'],
+								[33.51749917,126.5798668,'<div style="color:black; padding:5px; width:200px">푸른약국<br>제주시 화삼북로 63, 삼화빌딩 1층 102호 (삼양이동)<br><a href="/PharmacyDetail?Name=푸른약국" style="color:blue">상세보기</a></div>'],
+								[33.5172612,126.5879882,'<div style="color:black; padding:5px; width:200px">대원온누리약국<br>제주시 화삼북로 139, 1층 (삼양이동)<br><a href="/PharmacyDetail?Name=대원온누리약국" style="color:blue">상세보기</a></div>'],
+								[33.51644435,126.5809968,'<div style="color:black; padding:5px; width:200px">다정온누리약국<br>제주시 건주로 33, 1층 (도련일동)<br><a href="/PharmacyDetail?Name=다정온누리약국" style="color:blue">상세보기</a></div>'],
+								[33.51708821,126.581141,'<div style="color:black; padding:5px; width:200px">별약국<br>제주시 건주로 27, 1층 102호 (도련일동)<br><a href="/PharmacyDetail?Name=별약국" style="color:blue">상세보기</a></div>'],
+								[33.515619,126.5809871,'<div style="color:black; padding:5px; width:200px">삼화사랑약국<br>제주시 건주로 43, 1층 (도련일동)<br><a href="/PharmacyDetail?Name=삼화사랑약국" style="color:blue">상세보기</a></div>'],
+								[33.51676663,126.5802935,'<div style="color:black; padding:5px; width:200px">진영약국<br>제주시 건주로4길 6-8, SH 빌딩 103호 (도련일동)<br><a href="/PharmacyDetail?Name=진영약국" style="color:blue">상세보기</a></div>'],
+								[33.51706666,126.5802885,'<div style="color:black; padding:5px; width:200px">시원한약국<br>제주시 화삼북로 68, 삼화지구 신형빌딩 1층 102호 (도련일동)<br><a href="/PharmacyDetail?Name=시원한약국" style="color:blue">상세보기</a></div>'],
+								[33.51677852,126.5809829,'<div style="color:black; padding:5px; width:200px">설약국<br>제주시 건주로 31, 한라신협 삼화지점 1층 (도련일동)<br><a href="/PharmacyDetail?Name=설약국" style="color:blue">상세보기</a></div>'],
+								[33.49407932,126.5942191,'<div style="color:black; padding:5px; width:200px">동현약국<br>제주시 삼봉로 327, A동 102호 (봉개동, 봉개 미소담)<br><a href="/PharmacyDetail?Name=동현약국" style="color:blue">상세보기</a></div>'],
+								[33.53577381,126.6360339,'<div style="color:black; padding:5px; width:200px">한사랑약국<br>제주시 조천읍 신북로 217<br><a href="/PharmacyDetail?Name=한사랑약국" style="color:blue">상세보기</a></div>'],
+								[33.53600149,126.6371794,'<div style="color:black; padding:5px; width:200px">조천약국<br>제주시 조천읍 신북로 226<br><a href="/PharmacyDetail?Name=조천약국" style="color:blue">상세보기</a></div>'],
+								[33.54230384,126.6646353,'<div style="color:black; padding:5px; width:200px">대한약국<br>제주시 조천읍 조함해안로 488-6<br><a href="/PharmacyDetail?Name=대한약국" style="color:blue">상세보기</a></div>'],
+								[33.54150185,126.6663618,'<div style="color:black; padding:5px; width:200px">신한당약국<br>제주시 조천읍 신북로 530<br><a href="/PharmacyDetail?Name=신한당약국" style="color:blue">상세보기</a></div>'],
+								[33.54211283,126.6644173,'<div style="color:black; padding:5px; width:200px">영재약국<br>제주시 조천읍 신북로 510-1<br><a href="/PharmacyDetail?Name=영재약국" style="color:blue">상세보기</a></div>'],
+								[33.5420394,126.665971,'<div style="color:black; padding:5px; width:200px">나라약국<br>제주시 조천읍 신북로  523<br><a href="/PharmacyDetail?Name=나라약국" style="color:blue">상세보기</a></div>'],
+								[33.53656601,126.6749122,'<div style="color:black; padding:5px; width:200px">함덕하나로약국<br>제주시 조천읍 함와로 40<br><a href="/PharmacyDetail?Name=함덕하나로약국" style="color:blue">상세보기</a></div>'],
+								[33.53286726,126.6192143,'<div style="color:black; padding:5px; width:200px">봄날온누리약국<br>제주시 조천읍 신북로 46, 1층<br><a href="/PharmacyDetail?Name=봄날온누리약국" style="color:blue">상세보기</a></div>'],
+								[33.5545535,126.7502155,'<div style="color:black; padding:5px; width:200px">김녕약국<br>제주시 구좌읍 김녕로 114<br><a href="/PharmacyDetail?Name=김녕약국" style="color:blue">상세보기</a></div>'],
+								[33.55472352,126.7988709,'<div style="color:black; padding:5px; width:200px">월정온누리약국<br>제주시 구좌읍 해맞이해안로 486, 월정애비뉴 101호<br><a href="/PharmacyDetail?Name=월정온누리약국" style="color:blue">상세보기</a></div>'],
+								[33.52327903,126.8556675,'<div style="color:black; padding:5px; width:200px">구좌약국<br>제주시 구좌읍 구좌로 40, 1층<br><a href="/PharmacyDetail?Name=구좌약국" style="color:blue">상세보기</a></div>'],
+								[33.52083559,126.8587827,'<div style="color:black; padding:5px; width:200px">세화약국<br>제주시 구좌읍 세화10길 1<br><a href="/PharmacyDetail?Name=세화약국" style="color:blue">상세보기</a></div>'],
+								[33.52327863,126.8558697,'<div style="color:black; padding:5px; width:200px">메디팜감초당약국<br>제주시 구좌읍 구좌로 42<br><a href="/PharmacyDetail?Name=메디팜감초당약국" style="color:blue">상세보기</a></div>'],
+								[33.52330195,126.8566142,'<div style="color:black; padding:5px; width:200px">제일약국<br>제주시 구좌읍 구좌로 47<br><a href="/PharmacyDetail?Name=제일약국" style="color:blue">상세보기</a></div>'],
+								[33.52083596,126.8592728,'<div style="color:black; padding:5px; width:200px">건강약국<br>제주시 구좌읍 세화12길 1<br><a href="/PharmacyDetail?Name=건강약국" style="color:blue">상세보기</a></div>'],
+								[33.48415154,126.4769251,'<div style="color:black; padding:5px; width:200px">싱싱약국<br>제주시 노형로 386 (노형동)<br><a href="/PharmacyDetail?Name=싱싱약국" style="color:blue">상세보기</a></div>'],
+								[33.48624253,126.4782762,'<div style="color:black; padding:5px; width:200px">정약국<br>제주시 수덕1길 3 로타리빌딩<br><a href="/PharmacyDetail?Name=정약국" style="color:blue">상세보기</a></div>'],
+								[33.50022435,126.5166539,'<div style="color:black; padding:5px; width:200px">하나로약국<br>제주시 서광로 189<br><a href="/PharmacyDetail?Name=하나로약국" style="color:blue">상세보기</a></div>'],
+								[33.49685013,126.5469053,'<div style="color:black; padding:5px; width:200px">한우리약국<br>제주시 연신로 51<br><a href="/PharmacyDetail?Name=한우리약국" style="color:blue">상세보기</a></div>'],
+								[33.50687216,126.5246982,'<div style="color:black; padding:5px; width:200px">남문약국<br>제주시 중앙로 132<br><a href="/PharmacyDetail?Name=남문약국" style="color:blue">상세보기</a></div>'],
+								[33.50041766,126.525662,'<div style="color:black; padding:5px; width:200px">고운약국<br>제주시 서광로 273<br><a href="/PharmacyDetail?Name=고운약국" style="color:blue">상세보기</a></div>'],
+								[33.51797485,126.5211773,'<div style="color:black; padding:5px; width:200px">마트약국<br>제주시 탑동로 38 이마트<br><a href="/PharmacyDetail?Name=마트약국" style="color:blue">상세보기</a></div>'],
+								[33.48769916,126.4311134,'<div style="color:black; padding:5px; width:200px">가정온누리약국<br>제주시 우정로 57<br><a href="/PharmacyDetail?Name=가정온누리약국" style="color:blue">상세보기</a></div>'],
+								[33.5020001,126.5284389,'<div style="color:black; padding:5px; width:200px">웅진약국<br>제주시 중앙로 195<br><a href="/PharmacyDetail?Name=웅진약국" style="color:blue">상세보기</a></div>'],
+								[33.48894626,126.4756147,'<div style="color:black; padding:5px; width:200px">메디팜월랑약국<br>제주시 월랑로 39<br><a href="/PharmacyDetail?Name=메디팜월랑약국" style="color:blue">상세보기</a></div>'],
+								[33.50927828,126.5108119,'<div style="color:black; padding:5px; width:200px">제주유명약국<br>제주시 용문로 163 유명약국<br><a href="/PharmacyDetail?Name=제주유명약국" style="color:blue">상세보기</a></div>'],
+								[33.48676363,126.4921393,'<div style="color:black; padding:5px; width:200px">부부온누리약국<br>제주시 신대로16길 41<br><a href="/PharmacyDetail?Name=부부온누리약국" style="color:blue">상세보기</a></div>'],
+								[33.50031661,126.5132751,'<div style="color:black; padding:5px; width:200px">무등약국<br>제주시 서광로 157<br><a href="/PharmacyDetail?Name=무등약국" style="color:blue">상세보기</a></div>'],
+								[33.51289656,126.5308414,'<div style="color:black; padding:5px; width:200px">위생약국<br>제주시 동문로 40<br><a href="/PharmacyDetail?Name=위생약국" style="color:blue">상세보기</a></div>'],
+								[33.24818365,126.564014,'<div style="color:black; padding:5px; width:200px">서울약국<br>서귀포시 대정읍 하모상가로 325<br><a href="/PharmacyDetail?Name=서울약국" style="color:blue">상세보기</a></div>'],
+								[33.22139088,126.2518101,'<div style="color:black; padding:5px; width:200px">대정온누리약국<br>서귀포시 대정읍 하모중앙로 76, 1층 3호<br><a href="/PharmacyDetail?Name=대정온누리약국" style="color:blue">상세보기</a></div>'],
+								[33.22332394,126.2512101,'<div style="color:black; padding:5px; width:200px">시계탑약국<br>서귀포시 대정읍 하모이삼로 34-4 (시계탑약국)<br><a href="/PharmacyDetail?Name=시계탑약국" style="color:blue">상세보기</a></div>'],
+								[33.22167157,126.2517091,'<div style="color:black; padding:5px; width:200px">메디팜현대약국<br>서귀포시 대정읍 하모상가로 27<br><a href="/PharmacyDetail?Name=메디팜현대약국" style="color:blue">상세보기</a></div>'],
+								[33.22220541,126.2541246,'<div style="color:black; padding:5px; width:200px">건강약국<br>서귀포시 대정읍 하모상가로 51-1<br><a href="/PharmacyDetail?Name=건강약국" style="color:blue">상세보기</a></div>'],
+								[33.22160056,126.2536963,'<div style="color:black; padding:5px; width:200px">대정송약국<br>서귀포시 대정읍 하모상가로 46, 1층 (경원빌딩)<br><a href="/PharmacyDetail?Name=대정송약국" style="color:blue">상세보기</a></div>'],
+								[33.22180756,126.2539348,'<div style="color:black; padding:5px; width:200px">프라자약국<br>서귀포시 대정읍 신영로 109<br><a href="/PharmacyDetail?Name=프라자약국" style="color:blue">상세보기</a></div>'],
+								[33.22231977,126.2551534,'<div style="color:black; padding:5px; width:200px">삼성약국<br>서귀포시 대정읍 상모로 321 (모슬포약국)<br><a href="/PharmacyDetail?Name=삼성약국" style="color:blue">상세보기</a></div>'],
+								[33.22531707,126.2585171,'<div style="color:black; padding:5px; width:200px">흙한약국<br>서귀포시 대정읍 상모대서로20번길 20<br><a href="/PharmacyDetail?Name=흙한약국" style="color:blue">상세보기</a></div>'],
+								[33.24659817,126.3346297,'<div style="color:black; padding:5px; width:200px">한양약국<br>서귀포시 안덕면 화순로 110<br><a href="/PharmacyDetail?Name=한양약국" style="color:blue">상세보기</a></div>'],
+								[33.24630725,126.3341812,'<div style="color:black; padding:5px; width:200px">화순약국<br>서귀포시 안덕면 화순로 113<br><a href="/PharmacyDetail?Name=화순약국" style="color:blue">상세보기</a></div>'],
+								[33.25200205,126.4229942,'<div style="color:black; padding:5px; width:200px">율약국<br>서귀포시 중문로 1 (중문동)<br><a href="/PharmacyDetail?Name=율약국" style="color:blue">상세보기</a></div>'],
+								[33.25269465,126.4230283,'<div style="color:black; padding:5px; width:200px">다온약국<br>서귀포시 중문로 7 (중문동, 다온아파트)<br><a href="/PharmacyDetail?Name=다온약국" style="color:blue">상세보기</a></div>'],
+								[33.2517074,126.4232279,'<div style="color:black; padding:5px; width:200px">천제연약국<br>서귀포시 천제연로 174 (중문동)<br><a href="/PharmacyDetail?Name=천제연약국" style="color:blue">상세보기</a></div>'],
+								[33.25148698,126.4270367,'<div style="color:black; padding:5px; width:200px">한마음약국<br>서귀포시 천제연로 210-1 (중문동)<br><a href="/PharmacyDetail?Name=한마음약국" style="color:blue">상세보기</a></div>'],
+								[33.25150775,126.4260665,'<div style="color:black; padding:5px; width:200px">중문약국<br>서귀포시 천제연로 200 (중문동)<br><a href="/PharmacyDetail?Name=중문약국" style="color:blue">상세보기</a></div>'],
+								[33.25148219,126.4267792,'<div style="color:black; padding:5px; width:200px">국민약국<br>서귀포시 천제연로208번길 2 (중문동)<br><a href="/PharmacyDetail?Name=국민약국" style="color:blue">상세보기</a></div>'],
+								[33.25143639,126.4254531,'<div style="color:black; padding:5px; width:200px">정화약국<br>서귀포시 중문상로 36 (중문동)<br><a href="/PharmacyDetail?Name=정화약국" style="color:blue">상세보기</a></div>'],
+								[33.25280057,126.5026563,'<div style="color:black; padding:5px; width:200px">봄봄약국<br>서귀포시 대청로25번길 4 (강정동)<br><a href="/PharmacyDetail?Name=봄봄약국" style="color:blue">상세보기</a></div>'],
+								[33.25646489,126.5052924,'<div style="color:black; padding:5px; width:200px">금강한약국<br>서귀포시 신서로 69 (강정동, 강정지예타운)<br><a href="/PharmacyDetail?Name=금강한약국" style="color:blue">상세보기</a></div>'],
+								[33.24899263,126.5073221,'<div style="color:black; padding:5px; width:200px">신세계온누리약국<br>서귀포시 월드컵로 8, 104호 (강정동, 홍은프라자)<br><a href="/PharmacyDetail?Name=신세계온누리약국" style="color:blue">상세보기</a></div>'],
+								[33.25397195,126.5070023,'<div style="color:black; padding:5px; width:200px">바다약국<br>서귀포시 신서귀로97번길 51, 바다약국 101호 (강정동)<br><a href="/PharmacyDetail?Name=바다약국" style="color:blue">상세보기</a></div>'],
+								[33.25357809,126.5086356,'<div style="color:black; padding:5px; width:200px">탐라약국<br>서귀포시 신서로48번길 31 (강정동)<br><a href="/PharmacyDetail?Name=탐라약국" style="color:blue">상세보기</a></div>'],
+								[33.25314802,126.522288,'<div style="color:black; padding:5px; width:200px">연이수온누리약국<br>서귀포시 서호남로 91, 1층 105호 (서호동, 서귀포혁신 사랑으로 부영아파트)<br><a href="/PharmacyDetail?Name=연이수온누리약국" style="color:blue">상세보기</a></div>'],
+								[33.24871234,126.5084912,'<div style="color:black; padding:5px; width:200px">월드컵약국<br>서귀포시 일주동로 9213, GS25 1층 6호 (법환동)<br><a href="/PharmacyDetail?Name=월드컵약국" style="color:blue">상세보기</a></div>'],
+								[33.25480002,126.560487,'<div style="color:black; padding:5px; width:200px">광장약국<br>서귀포시 중앙로 113 (서홍동)<br><a href="/PharmacyDetail?Name=광장약국" style="color:blue">상세보기</a></div>'],
+								[33.25310456,126.559358,'<div style="color:black; padding:5px; width:200px">최고약국<br>서귀포시 일주동로 8696 (서홍동)<br><a href="/PharmacyDetail?Name=최고약국" style="color:blue">상세보기</a></div>'],
+								[33.25457225,126.5644287,'<div style="color:black; padding:5px; width:200px">정문약국<br>서귀포시 일주동로 8648-12 (동홍동, 정문약국)<br><a href="/PharmacyDetail?Name=정문약국" style="color:blue">상세보기</a></div>'],
+								[33.25427957,126.5653015,'<div style="color:black; padding:5px; width:200px">부부약국<br>서귀포시 일주동로 8640 (동홍동)<br><a href="/PharmacyDetail?Name=부부약국" style="color:blue">상세보기</a></div>'],
+								[33.25646143,126.5642476,'<div style="color:black; padding:5px; width:200px">한빛약국<br>서귀포시 장수로 36 (동홍동)<br><a href="/PharmacyDetail?Name=한빛약국" style="color:blue">상세보기</a></div>'],
+								[33.25422164,126.5611294,'<div style="color:black; padding:5px; width:200px">조약국<br>서귀포시 중앙로 108 (동홍동)<br><a href="/PharmacyDetail?Name=조약국" style="color:blue">상세보기</a></div>'],
+								[33.25420922,126.5641262,'<div style="color:black; padding:5px; width:200px">밝은 온누리약국<br>서귀포시 일주동로 8648-3 (동홍동)<br><a href="/PharmacyDetail?Name=밝은 온누리약국" style="color:blue">상세보기</a></div>'],
+								[33.2550615,126.575544,'<div style="color:black; padding:5px; width:200px">우리약국<br>서귀포시 일주동로 8544, 1층 (동홍동, 동인빌딩)<br><a href="/PharmacyDetail?Name=우리약국" style="color:blue">상세보기</a></div>'],
+								[33.255056,126.5718352,'<div style="color:black; padding:5px; width:200px">동홍약국<br>서귀포시 동홍중앙로 49 (동홍동)<br><a href="/PharmacyDetail?Name=동홍약국" style="color:blue">상세보기</a></div>'],
+								[33.25033718,126.5714032,'<div style="color:black; padding:5px; width:200px">신세계약국<br>서귀포시 태평로 505 (동홍동)<br><a href="/PharmacyDetail?Name=신세계약국" style="color:blue">상세보기</a></div>'],
+								[33.25301903,126.5616892,'<div style="color:black; padding:5px; width:200px">다나약국<br>서귀포시 일주동로 8675 (서귀동)<br><a href="/PharmacyDetail?Name=다나약국" style="color:blue">상세보기</a></div>'],
+								[33.25303755,126.5618265,'<div style="color:black; padding:5px; width:200px">열방약국<br>서귀포시 일주동로 8673 (서귀동)<br><a href="/PharmacyDetail?Name=열방약국" style="color:blue">상세보기</a></div>'],
+								[33.24883285,126.5681571,'<div style="color:black; padding:5px; width:200px">동문약국<br>서귀포시 중정로 109, 102호 (서귀동)<br><a href="/PharmacyDetail?Name=동문약국" style="color:blue">상세보기</a></div>'],
+								[33.25234235,126.5620703,'<div style="color:black; padding:5px; width:200px">현강약국<br>서귀포시 동문로 5 (서귀동)<br><a href="/PharmacyDetail?Name=현강약국" style="color:blue">상세보기</a></div>'],
+								[33.25227118,126.5613195,'<div style="color:black; padding:5px; width:200px">동산프라자약국<br>서귀포시 중앙로 86 (서귀동)<br><a href="/PharmacyDetail?Name=동산프라자약국" style="color:blue">상세보기</a></div>'],
+								[33.24818365,126.564014,'<div style="color:black; padding:5px; width:200px">서울약국<br>서귀포시 중정로 71 (서귀동)<br><a href="/PharmacyDetail?Name=서울약국" style="color:blue">상세보기</a></div>'],
+								[33.24818365,126.564014,'<div style="color:black; padding:5px; width:200px">서울약국<br>서귀포시 중정로 71 (서귀동)<br><a href="/PharmacyDetail?Name=서울약국" style="color:blue">상세보기</a></div>'],
+								[33.24846473,126.5639482,'<div style="color:black; padding:5px; width:200px">유선약국<br>서귀포시 중정로73번길 3-1 (서귀동)<br><a href="/PharmacyDetail?Name=유선약국" style="color:blue">상세보기</a></div>'],
+								[33.2480513,126.5632978,'<div style="color:black; padding:5px; width:200px">중앙약국<br>서귀포시 중정로 65 (서귀동)<br><a href="/PharmacyDetail?Name=중앙약국" style="color:blue">상세보기</a></div>'],
+								[33.24810113,126.5631087,'<div style="color:black; padding:5px; width:200px">종로약국<br>서귀포시 중앙로42번길 8, 강원청과 (서귀동)<br><a href="/PharmacyDetail?Name=종로약국" style="color:blue">상세보기</a></div>'],
+								[33.24932421,126.5663347,'<div style="color:black; padding:5px; width:200px">은성약국<br>서귀포시 중앙로42번길 46 (서귀동)<br><a href="/PharmacyDetail?Name=은성약국" style="color:blue">상세보기</a></div>'],
+								[33.24799839,126.5615855,'<div style="color:black; padding:5px; width:200px">삼일약국<br>서귀포시 중앙로 37 (서귀동)<br><a href="/PharmacyDetail?Name=삼일약국" style="color:blue">상세보기</a></div>'],
+								[33.24785988,126.5616117,'<div style="color:black; padding:5px; width:200px">새현대약국<br>서귀포시 중앙로 35-1, 현대약국 (서귀동)<br><a href="/PharmacyDetail?Name=새현대약국" style="color:blue">상세보기</a></div>'],
+								[33.25259621,126.560425,'<div style="color:black; padding:5px; width:200px">서귀포약국<br>서귀포시 중앙로 89 (서귀동)<br><a href="/PharmacyDetail?Name=서귀포약국" style="color:blue">상세보기</a></div>'],
+								[33.24751016,126.5622275,'<div style="color:black; padding:5px; width:200px">김약국<br>서귀포시 중정로 54-1 (서귀동)<br><a href="/PharmacyDetail?Name=김약국" style="color:blue">상세보기</a></div>'],
+								[33.24791413,126.56429,'<div style="color:black; padding:5px; width:200px">동의당약국<br>서귀포시 이중섭로 1 (서귀동)<br><a href="/PharmacyDetail?Name=동의당약국" style="color:blue">상세보기</a></div>'],
+								[33.24738561,126.5616787,'<div style="color:black; padding:5px; width:200px">늘푸른약국<br>서귀포시 중정로 50 (서귀동, 늘푸른약국)<br><a href="/PharmacyDetail?Name=늘푸른약국" style="color:blue">상세보기</a></div>'],
+								[33.24778886,126.5635352,'<div style="color:black; padding:5px; width:200px">민제약국<br>서귀포시 중정로 66-2 (서귀동)<br><a href="/PharmacyDetail?Name=민제약국" style="color:blue">상세보기</a></div>'],
+								[33.24780718,126.5636167,'<div style="color:black; padding:5px; width:200px">광진당약국<br>서귀포시 중정로 68 (서귀동)<br><a href="/PharmacyDetail?Name=광진당약국" style="color:blue">상세보기</a></div>'],
+								[33.24777735,126.5638342,'<div style="color:black; padding:5px; width:200px">오름약국<br>서귀포시 중정로 70, 1층 (서귀동)<br><a href="/PharmacyDetail?Name=오름약국" style="color:blue">상세보기</a></div>'],
+								[33.24513435,126.5655657,'<div style="color:black; padding:5px; width:200px">수정약국<br>서귀포시 태평로 424 (서귀동)<br><a href="/PharmacyDetail?Name=수정약국" style="color:blue">상세보기</a></div>'],
+								[33.26339565,126.6176263,'<div style="color:black; padding:5px; width:200px">정약국<br>서귀포시 하신상로 32 (하효동)<br><a href="/PharmacyDetail?Name=정약국" style="color:blue">상세보기</a></div>'],
+								[33.27500125,126.661078,'<div style="color:black; padding:5px; width:200px">위미약국<br>서귀포시 남원읍 태위로 127 (위미약국)<br><a href="/PharmacyDetail?Name=위미약국" style="color:blue">상세보기</a></div>'],
+								[33.27777507,126.7143606,'<div style="color:black; padding:5px; width:200px">동원약국<br>서귀포시 남원읍 태위로 634 ((남원읍))<br><a href="/PharmacyDetail?Name=동원약국" style="color:blue">상세보기</a></div>'],
+								[33.27963509,126.7202886,'<div style="color:black; padding:5px; width:200px">고은약국<br>서귀포시 남원읍 태위로 691<br><a href="/PharmacyDetail?Name=고은약국" style="color:blue">상세보기</a></div>'],
+								[33.27811772,126.7143724,'<div style="color:black; padding:5px; width:200px">조광약국<br>서귀포시 남원읍 태위로 633<br><a href="/PharmacyDetail?Name=조광약국" style="color:blue">상세보기</a></div>'],
+								[33.27949709,126.719864,'<div style="color:black; padding:5px; width:200px">민생약국<br>서귀포시 남원읍 태위로 687<br><a href="/PharmacyDetail?Name=민생약국" style="color:blue">상세보기</a></div>'],
+								[33.27893363,126.7178992,'<div style="color:black; padding:5px; width:200px">남원약국<br>서귀포시 남원읍 태위로 667<br><a href="/PharmacyDetail?Name=남원약국" style="color:blue">상세보기</a></div>'],
+								[33.32583506,126.8328655,'<div style="color:black; padding:5px; width:200px">소아약국<br>서귀포시 표선면 표선중앙로 84 (소아약국)<br><a href="/PharmacyDetail?Name=소아약국" style="color:blue">상세보기</a></div>'],
+								[33.32602924,126.8324398,'<div style="color:black; padding:5px; width:200px">표선한사랑약국<br>서귀포시 표선면 표선중앙로80번길 1<br><a href="/PharmacyDetail?Name=표선한사랑약국" style="color:blue">상세보기</a></div>'],
+								[33.32425012,126.8316227,'<div style="color:black; padding:5px; width:200px">온세상건강약국<br>서귀포시 표선면 표선동서로 225 (표선의원)<br><a href="/PharmacyDetail?Name=온세상건강약국" style="color:blue">상세보기</a></div>'],
+								[33.32433564,126.8308578,'<div style="color:black; padding:5px; width:200px">은혜약국<br>서귀포시 표선면 표선관정로 97 (서울약국)<br><a href="/PharmacyDetail?Name=은혜약국" style="color:blue">상세보기</a></div>'],
+								[33.44961717,126.9150752,'<div style="color:black; padding:5px; width:200px">제일약국<br>서귀포시 성산읍 동류암로36번길  23<br><a href="/PharmacyDetail?Name=제일약국" style="color:blue">상세보기</a></div>'],
+								[33.44958077,126.9145934,'<div style="color:black; padding:5px; width:200px">태양약국<br>서귀포시 성산읍 고성오조로  67<br><a href="/PharmacyDetail?Name=태양약국" style="color:blue">상세보기</a></div>'],
+								[33.45025182,126.9149541,'<div style="color:black; padding:5px; width:200px">제주사랑약국<br>서귀포시 성산읍 고성오조로 74<br><a href="/PharmacyDetail?Name=제주사랑약국" style="color:blue">상세보기</a></div>'],
+								[33.44711975,126.9132962,'<div style="color:black; padding:5px; width:200px">동남온누리약국<br>서귀포시 성산읍 일출로 4, 케이빌딩<br><a href="/PharmacyDetail?Name=동남온누리약국" style="color:blue">상세보기</a></div>'],
+								[33.46332558,126.9333102,'<div style="color:black; padding:5px; width:200px">새한약국<br>서귀포시 성산읍 성산중앙로 39<br><a href="/PharmacyDetail?Name=새한약국" style="color:blue">상세보기</a></div>'],
+								[33.28691522,126.2803435,'<div style="color:black; padding:5px; width:200px">프라임약국<br>서귀포시 대정읍 에듀시티로 102, 104동 105호<br><a href="/PharmacyDetail?Name=프라임약국" style="color:blue">상세보기</a></div>']
+								]
+
+								var markers = [];
+
+								for (var i=0; i < data.length; i++) {
+									// 지도에 마커를 생성하고 표시한다
+									var marker = new kakao.maps.Marker({
+										position: new kakao.maps.LatLng(data[i][0], data[i][1]), // 마커의 좌표
+										map: map, // 마커를 표시할 지도 객체
+										clickable: true // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
+									});
+
+									// 인포윈도우를 생성합니다
+									var infowindow = new kakao.maps.InfoWindow({
+										content : data[i][2],
+										removable : iwRemoveable
+									});
+
+									// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+									function makeOverListener(map, marker, infowindow) {
+										return function() {
+											infowindow.open(map, marker);
+										};
+									}
+
+									// 마커에 mouseover 이벤트를 등록합니다
+									// 이벤트 리스너로는 클로저를 만들어 등록합니다 
+									// for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+									kakao.maps.event.addListener(marker, 'click', makeOverListener(map, marker, infowindow));
+
+									// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+									markers.push(marker);
+								}
+								// 클러스터러에 마커들을 추가합니다
+								clusterer.addMarkers(markers);
+
+								// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+								var zoomControl = new kakao.maps.ZoomControl();
+								map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+							</script>
+						</div>
+					</div>
+					<!-- Bar Section -->
+					<div class="section-block pt-0" style="background-color: rgba(140, 198, 63, 1); width:100%; height:100px">
+						<div class="row">
+							<div class="column width-12 center">
+								<div class="title-container" style="text-align:center; vertical-align:middle;">
+									<h4 class="color-white" style="font-size:20px"><br>제주도 내 약국은 총 308개입니다.</h4>
+									<h4 class="color-white" style="font-size:18px">제주시 약국은 235개, 서귀포시 약국은 73개입니다.</h4>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Bar Section End -->
+				</section>
+				<!-- Map Section End -->
+
+				<!-- Lightbox Images -->
+				<section class="section-block pt-0">
+					<div class="row">
+						<div class="column width-10 offset-1 center">
+							<h2 class="mb-50">공공심야약국</h2>
+
+							<!-- Portfolio Grid -->
+							<div class="grid-container fade-in-progressively no-padding-top" data-layout-mode="masonry" data-grid-ratio="1" data-animate-resize data-animate-resize-duration="0">
+								<div class="row">
+									<div class="column width-12">
+										<div class="row grid content-grid-4">
+											{% for j in range(0, len2) %}
+											<div class="grid-item product portrait grid-sizer">
+												<div class="thumbnail product-thumbnail img-scale-in" data-hover-easing="easeInOut" data-hover-speed="700" data-hover-bkg-color="#000000" data-hover-bkg-opacity="0.5">
+													<span class="onsale">심야</span>
+													<a class="overlay-link" href="{{ url_for('DetailPage', Name=Name2[j]) }}">
+														<img src="{{ url_for('static', filename='images/phnight.png')}}" alt=""/>
+														<span class="overlay-info">
+															<span>
+																<span class="product-title">{{AddressDoro2[j]}}</span>
+															</span>
+														</span>
+													</a>
+												</div>
+												<div class="product-details">
+													<h3 class="product-title">
+														<a href="{{ url_for('DetailPage', Name=Name2[j]) }}"><br>{{Name2[j]}}</a>
+													</h3>
+													<span class="color-black">{{DetailNight[j]}}</span>
+												</div>
+											</div>
+											{% endfor %}
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Portfolio Grid End -->
+
+						</div>
+					</div>
+				</section>
+				<!-- Lightbox Images End -->
+				
+				<!-- Lightbox Video -->
+				<section class="section-block bkg-grey-ultralight">
+					<div class="row">
+						<div class="column width-10 offset-1 center">
+							<h2 class="mb-50">연중무휴약국</h2>
+
+							<!-- Portfolio Grid -->
+							<div class="grid-container fade-in-progressively no-padding-top" data-layout-mode="masonry" data-grid-ratio="1" data-animate-resize data-animate-resize-duration="0">
+								<div class="row">
+									<div class="column width-12">
+										<div class="row grid content-grid-4">
+											{% for k in range(0, len3) %}
+											<div class="grid-item product portrait grid-sizer">
+												<div class="thumbnail product-thumbnail img-scale-in" data-hover-easing="easeInOut" data-hover-speed="700" data-hover-bkg-color="#000000" data-hover-bkg-opacity="0.5">
+													<span class="onsale">연중무휴</span>
+													<a class="overlay-link" href="{{ url_for('DetailPage', Name=Name3[k]) }}">
+														<img src="{{ url_for('static', filename='images/phall.png')}}" alt=""/>
+														<span class="overlay-info">
+															<span>
+																<span class="product-title">{{AddressDoro3[k]}}</span>
+															</span>
+														</span>
+													</a>
+												</div>
+												<div class="product-details">
+													<h3 class="product-title">
+														<a href="{{ url_for('DetailPage', Name=Name3[k]) }}"><br>{{Name3[k]}}</a>
+													</h3>
+													<span class="color-black">{{Detail365[k]}}</span>
+												</div>
+											</div>
+											{% endfor %}
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Portfolio Grid End -->
+
+						</div>
+					</div>
+				</section>
+				<!-- Lightbox Video End -->
+
+				<!-- Boxed Feature Columns -->
+				<div class="section-block pt-0">
+					<div class="row">
+						<div class="column width-10 offset-1 center">
+							<h2 class="mb-50"><br><br>Our Goal</h2>
+						</div>
+					</div>
+					<div class="row flex boxes">
+						<div class="column width-4">
+							<div class="feature-column box rounded thick border-green large bkg-grey-ultralight center horizon" data-animate-in="preset:flipInY;duration:1000ms;" data-threshold="1">
+								<span> <img src="{{ url_for('static', filename='images/iconaccuracy.png')}}" width="50" height="50"> </span>
+								<div class="feature-text color-black">
+									<h4><br>정확하게</h4>
+									<p>제주도, 도내 약국과의 협업으로 정확한 정보를 제공합니다.</p>
+								</div>
+							</div>
+						</div>
+						<div class="column width-4">
+							<div class="feature-column box rounded thick border-green large bkg-grey-ultralight center horizon" data-animate-in="preset:flipInY;duration:1000ms;delay:200ms;" data-threshold="1">
+								<span> <img src="{{ url_for('static', filename='images/iconfast.png')}}" width="60" height="60"> </span>
+								<div class="feature-text color-black">
+									<h4><br>빠르게</h4>
+									<p>내 위치 주변의 약국을 빠르게 확인할 수 있습니다.</p>
+								</div>
+							</div>
+						</div>
+						<div class="column width-4">
+							<div class="feature-column box rounded thick border-green large bkg-grey-ultralight center horizon" data-animate-in="preset:flipInY;duration:1000ms;delay:400ms;" data-threshold="1">
+								<span> <img src="{{ url_for('static', filename='images/iconeasy.png')}}" width="50" height="50"> </span>
+								<div class="feature-text color-black">
+									<h4><br>간단하게</h4>
+									<p>몇 번의 클릭으로 약국 정보의 조회가 가능합니다.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Boxed Feature Columns End -->
+
+			</div>
+			<!-- Content End -->
+
+				<!-- Form Modal -->
+				<div class="section-block bkg-grey-ultralight">
+					<div class="row">
+						<div class="column width-12 center">
+							<h3 class="mb-50">정보 수정 / 추가 요청하기</h3>
+							<p>정보 수정이나 추가가 필요하시다면 아래 버튼을 눌러 메일을 보내주세요.<br>확인 후 최대한 빠르게 반영해드리겠습니다.</p>
+							<a data-content="inline" data-toolbar="" data-aux-classes="tml-contact-modal tml-exit-light rounded" data-modal-mode data-modal-width="700" data-lightbox-animation="fadeIn" href="#contact-modal" class="lightbox-link button rounded bkg-theme bkg-hover-green color-white color-hover-white"><span class="icon-mail left"></span> 메일 보내기</a>
+						</div>
+					</div>
+				</div>
+				<!-- Form Modal End  -->
+
+				<!-- Contact Advanced Modal End -->
+				<div id="contact-modal" class="section-block pt-0 pb-30 background-none hide">
+					
+					<!-- Intro Title Section 2 -->
+					<div class="section-block intro-title-2-1 xsmall bkg-grey-ultralight">
+						<div class="media-overlay bkg-black opacity-03"></div>
+						<div class="row">
+							<div class="column width-12">
+								<div class="title-container">
+									<div class="title-container-inner center color-white">
+										<h1 class="title-medium mb-0">Contact Us</h1>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Intro Title Section 2 End -->
+					<!-- Form -->
+					<div class="section-block pt-60 pb-0">
+						<div class="row">
+							<div class="column width-10 offset-1">
+								<div class="signup-form-container">
+									<form class="contact-form" action="php/send-email.php" method="post" novalidate>
+										<div class="row">
+											<div class="column width-12">
+												<input type="text" name="fname" class="form-fname form-element large" placeholder="Name*" tabindex="1" required>
+											</div>
+											<div class="column width-12">
+												<input type="email" name="email" class="form-email form-element large" placeholder="Email address*" tabindex="3" required>
+											</div>
+											<div class="column width-6">
+												<input type="text" name="honeypot" class="form-honeypot form-element large">
+											</div>
+										</div>
+										<div class="row">
+											<div class="column width-12">
+												<div class="field-wrapper">
+													<textarea name="message" class="form-message form-element rounded large" placeholder="Message*" tabindex="7" required></textarea>
+												</div>
+											</div>
+											<div class="column width-12 center">
+												<input type="submit" value="메일 보내기" class="form-submit button rounded medium bkg-theme bkg-hover-green color-white color-hover-white">
+											</div>
+										</div>
+									</form>
+									<div class="form-response center"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Form End -->
+				</div>
+
+			<!-- Footer -->
+			<footer class="footer">
+				<div class="footer-top two-columns-on-tablet" style="background-color: rgba(140, 198, 63, 1);">
+					<div class="row flex">
+						<div class="column width-3">
+							<div class="widget">
+								<a><img src="{{ url_for('static', filename='images/jejufoot.png')}}" alt="다모아 약국" width="100px"/></a>
+								<p>&copy; 2022. JejuDamoaPharmacy. All Rights Reserved.</p>
+							</div>
+						</div>
+						<div class="column width-3">
+							<div class="social-list list-horizontal">
+								<h4 class="widget-title">About Us</h4>
+								<p>GitHub @yjungs2<br>GitHub @hwas2</p>
+							</div>
+						</div>
+						<div class="column width-3">
+							<div class="social-list list-horizontal">
+								<h4 class="widget-title">About 제주</h4>
+								<li><a href="https://www.youtube.com/channel/UCK2JegInDWoDtwEpjh4HzLg"><span class="icon-youtube-with-circle medium"></span></a></li>
+								<li><a href="https://www.facebook.com/happyjejudo"><span class="icon-facebook-with-circle medium"></span></a></li>
+								<li><a href="https://www.instagram.com/special_jejudo/"><span class="icon-instagram-with-circle medium"></span></a></li>
+							</div>
+						</div>
+						<div class="column width-3">
+							<div class="social-list list-horizontal">
+								<h4 class="widget-title">About 제주데이터허브</h4>
+								<li><a href="https://www.youtube.com/channel/UC_q-SIWN8fx7rr3yK8U_9rA"><span class="icon-youtube-with-circle medium"></span></a></li>
+							</div>
+						</div>
+					</div>
+				</div>
+			</footer>
+			<!-- Footer End -->
+
+		</div>
+	</div>
+
+	<!-- Js -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="{{url_for('static', filename='js/timber.master.min.js')}}"></script>
+</body>
+</html>
